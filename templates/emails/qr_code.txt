@@ -1,0 +1,12 @@
+Welcome to {{ event_name }}
+
+Hello {{ username }},
+
+Thank you for registering for {{ event_name }}. Your QR code has been generated.
+
+Instructions:
+- Keep this QR code safe
+- Show this QR code at the event entrance
+- Don't share it with others
+
+See you at the event!

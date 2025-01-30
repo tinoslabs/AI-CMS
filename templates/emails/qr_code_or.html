@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event QR Code</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2>Welcome to {{ event_name }}</h2>
+        
+        <p>Hello {{ username }},</p>
+        
+        <p>Thank you for registering for {{ event_name }}. Please find your unique QR code below.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <img src="cid:qr_code" 
+                alt="Event QR Code" 
+                style="width: 250px; height: 250px; display: block;">
+        </div>
+        
+        <p><strong>Instructions:</strong></p>
+        <ul>
+            <li>Keep this QR code safe</li>
+            <li>Show this QR code at the event entrance</li>
+            <li>Don't share it with others</li>
+        </ul>
+        
+        <p>See you at the event!</p>
+    </div>
+</body>
+</html>
