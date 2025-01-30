@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-p14()ko1srdvj&1^%x*7ccihq$%+g-ymqy%amu9y24265fuo59
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ai-cms.onrender.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
