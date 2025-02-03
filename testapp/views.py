@@ -33,6 +33,11 @@ def register_user(request):
             # user_image = serializer.validated_data['user_image']  # Now mandatory
             phone_number = serializer.validated_data['phone_number']  # Now mandatory
 
+            fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
+
+            # if not fingerprint_data:
+            #     return Response({"error": "Fingerprint data is required."}, status=status.HTTP_400_BAD_REQUEST)
+
             try:
                 print("Generating QR code")
                 qr_data, qr_buffer = generate_secure_qr_code(username)
@@ -58,7 +63,9 @@ def register_user(request):
                 qr_code_data=qr_data,
                 # user_image=user_image,  # Now mandatory
                 qr_delivered=True,
-                qr_verified=False
+                qr_verified=False,
+                fingerprint_data = fingerprint_data,
+                fingerprint_verified = False
             )
             print("User created successfully")
 
@@ -86,6 +93,9 @@ def register_user(request):
         logger.error(f"Registration error: {str(e)}")
         print("Unexpected error:", e)
         return Response({"error": "Registration failed. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
 
 
 

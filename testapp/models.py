@@ -22,11 +22,17 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
     user_image = models.ImageField(upload_to=user_image_upload_path, default='default/default_profile.jpg', blank=True, null=True)
+    
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='participant')
+    
     qr_code = models.ImageField(upload_to="qr_codes/%Y/%m/", blank=True, null=True)
     qr_code_data = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='participant')
     qr_delivered = models.BooleanField(default=False)
     qr_verified = models.BooleanField(default=False)
+
+    fingerprint_data = models.TextField(null=True, blank=True)  # Store Base64 fingerprint
+    fingerprint_verified = models.BooleanField(default=False)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
