@@ -23,14 +23,20 @@
         
         <p>Hello {{ username }},</p>
         
-        <p>Here is your QR code for {{ event_name }} on {{ event_date }}:</p>
+        <p>Thank you for registering for {{ event_name }}. Please find your unique QR code below.</p>
         
-        <div class="qr-container">
-            <!-- Using multiple reference formats for maximum compatibility -->
-            <img src="cid:{{ content_id }}"
-                 class="qr-image"
-                 alt="Event QR Code"
-                 style="max-width: 300px; width: 100%; height: auto; display: inline-block;">
+        
+        <!-- <div style="width: 200px; height: 200px; background-image: url('cid:qr_code'); 
+            background-size: cover; margin: 0 auto;"></div> -->
+
+        <div style="width: 250px; height: 250px; 
+            background-image: url('cid:qr_code'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            margin: 0 auto; 
+            border: 5px solid #000; 
+            border-radius: 10px;">
         </div>
         
         <p style="margin-top: 20px;">Please present this QR code at the event entrance.</p>
