@@ -6,8 +6,13 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from email.mime.image import MIMEImage
+import hashlib
 import logging
 logger = logging.getLogger(__name__)
+
+#  for hashing the QR Data
+def hash_qr_data(qr_data: str) -> str:
+    return hashlib.sha256(qr_data.encode()).hexdigest()
 
 
 def generate_secure_qr_code(username: str) -> Tuple[str, BytesIO]:
@@ -22,6 +27,8 @@ def generate_secure_qr_code(username: str) -> Tuple[str, BytesIO]:
     """
     unique_id = get_random_string(32)
     qr_data = f"EVENT-{settings.EVENT_ID}-{username}-{unique_id}"
+    
+    qr_data = hash_qr_data(qr_data) # for hashing
     
     try:
         qr = qrcode.QRCode(
