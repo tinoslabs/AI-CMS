@@ -31,6 +31,8 @@ from .models import User
 class UserRegistrationSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(required=True, max_length=15)
     fingerprint_data = serializers.CharField(required=False, allow_null=True)
+    user_image = serializers.ImageField(required=True)  # Ensure image is mandatory
+
 
     class Meta:
         model = User
@@ -48,6 +50,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Phone number must be exactly 10 digits.")
         if User.objects.filter(phone_number=value).exists():
             raise serializers.ValidationError("Phone number already registered.")
+        return value
+    
+    def validate_user_image(self, value):
+        """Ensure user_image is provided"""
+        if not value:
+            raise serializers.ValidationError("User image is required.")
         return value
 
     def create(self, validated_data):

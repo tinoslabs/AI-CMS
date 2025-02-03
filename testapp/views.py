@@ -6,11 +6,13 @@ from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from .models import User
 from .serializers import UserRegistrationSerializer, LoginSerializer
-from .utils import generate_secure_qr_code, send_email_with_qr
+from .utils import generate_secure_qr_code, send_email_with_qr, compare_fingerprints
 from django.core.files.base import ContentFile
 from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from hashlib import sha256
+
 
 logger = logging.getLogger(__name__)
 
@@ -30,14 +32,30 @@ def register_user(request):
             print("Serializer validation passed")
             username = serializer.validated_data['username']
             email = serializer.validated_data['email']
-            # user_image = serializer.validated_data['user_image']  # Now mandatory
+            user_image = serializer.validated_data['user_image']  # Now mandatory
             phone_number = serializer.validated_data['phone_number']  # Now mandatory
 
             fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
 
+            try:
+                # Hash the fingerprint before saving
+                fingerprint_hash = sha256(fingerprint_data.encode()).hexdigest()
+
+                # Ensure no duplicate fingerprints exist
+                if User.objects.filter(fingerprint_template_hash=fingerprint_hash).exists():
+                    return Response({"error": "Fingerprint already registered."}, status=400)
+
+                # Save fingerprint to user
+                fingerprint_template = fingerprint_data.encode()  # Save raw data (optional)
+                fingerprint_template_hash = fingerprint_hash  # Save hash for matching
+
+            except Exception as e:
+                return Response({"error": "Error saving fingerprint."}, status=500)
+
             # if not fingerprint_data:
             #     return Response({"error": "Fingerprint data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
+            # mail sending
             try:
                 print("Generating QR code")
                 qr_data, qr_buffer = generate_secure_qr_code(username)
@@ -61,10 +79,11 @@ def register_user(request):
                 email=email,
                 phone_number=phone_number,  # Now mandatory
                 qr_code_data=qr_data,
-                # user_image=user_image,  # Now mandatory
+                user_image=user_image,  # Now mandatory
                 qr_delivered=True,
                 qr_verified=False,
-                fingerprint_data = fingerprint_data,
+                fingerprint_template = fingerprint_template,
+                fingerprint_template_hash = fingerprint_template_hash,                
                 fingerprint_verified = False
             )
             print("User created successfully")
@@ -95,12 +114,49 @@ def register_user(request):
         return Response({"error": "Registration failed. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+# View: Verify Fingerprint and Return Account Details
+@api_view(['POST'])
+# @permission_classes([IsAuthenticated])  # Assuming the user is authenticated (JWT or other method)
+def verify_fingerprint(request):
+    fingerprint_data = request.data.get('fingerprint_data')
 
+    if not fingerprint_data:
+        return Response({"error": "Fingerprint data is required."}, status=400)
+
+    try:
+        # Step 1: Find the user by matching the fingerprint hash
+        users_with_fingerprints = User.objects.exclude(fingerprint_template_hash__isnull=True)
+
+        # Step 2: Compare the fingerprint data with the stored template hash
+        for user in users_with_fingerprints:
+            if compare_fingerprints(user.fingerprint_template_hash, fingerprint_data):
+                # Step 3: If match found, mark fingerprint as verified and return user details
+                user.fingerprint_verified = True
+                user.save()
+
+                # Return the user account details
+                return Response({
+                    "message": "Fingerprint verified successfully.",
+                    "user": {
+                        "username": user.username,
+                        "email": user.email,
+                        "role": user.role,
+                        "fingerprint_verified": user.fingerprint_verified,
+                        "user_image_url": request.build_absolute_uri(user.user_image.url) if user.user_image else None,
+                    }
+                }, status=200)
+
+        # If no match found
+        return Response({"error": "Fingerprint not recognized."}, status=400)
+
+    except Exception as e:
+        # Handle unexpected errors
+        return Response({"error": "An error occurred during fingerprint verification."}, status=500)
 
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def verify_qr_code(request):
     print("Received QR code verification request")
     qr_data = request.data.get('qr_code_data')

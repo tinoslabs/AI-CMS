@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
 from email.mime.image import MIMEImage
 import hashlib
+from hashlib import sha256
 import logging
 logger = logging.getLogger(__name__)
 
@@ -119,4 +120,14 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
     except Exception as e:
         logger.error(f"Failed to send email: {str(e)}")
         raise
+
+
+#  Utility function to compare fingerprints using hashed templates
+def compare_fingerprints(stored_hash, input_template):
+    """
+    Compare the stored fingerprint hash with the input template's hash.
+    This is faster than comparing the entire fingerprint templates.
+    """
+    input_hash = sha256(input_template).hexdigest()
+    return stored_hash == input_hash
 
