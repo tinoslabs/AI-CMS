@@ -1,39 +1,37 @@
-# models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.core.validators import MinLengthValidator
+import os
+
+def user_image_upload_path(instance, filename):
+    """Generate a file path for new user image uploads."""
+    ext = filename.split('.')[-1]  # Get the file extension
+    filename = f"{instance.id}_{instance.username}.{ext}"  # Format: "id_username.jpg"
+    return os.path.join("student_images", filename)  # Save inside "student_images/"
+
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 class User(AbstractUser):
-    username = models.CharField(max_length=150, unique=False) 
-    email = models.EmailField(unique=True)  # Ensure email remains unique
-    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)  # Add phone number
-    user_image = models.ImageField(upload_to="student_images/%Y/%m/", default='default/default_profile.jpg', blank=True, null=True)
-    qr_code = models.ImageField(
-        upload_to="qr_codes/%Y/%m/",
-        blank=True,
-        null=True
+    ROLE_CHOICES = (
+        ('participant', 'Participant'),
+        ('volunteer', 'Volunteer'),
     )
-    qr_code_data = models.CharField(
-        max_length=255,
-        unique=True,
-        null=True,
-        blank=True
-    )
-    delivered = models.BooleanField(default=False)
-    verified = models.BooleanField(default=False)
+
+    username = models.CharField(max_length=150, unique=False)  # Remove uniqueness
+    email = models.EmailField(unique=True)
+    phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
+    user_image = models.ImageField(upload_to=user_image_upload_path, default='default/default_profile.jpg', blank=True, null=True)
+    qr_code = models.ImageField(upload_to="qr_codes/%Y/%m/", blank=True, null=True)
+    qr_code_data = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='participant')
+    qr_delivered = models.BooleanField(default=False)
+    qr_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'  # Use email as the primary identifier
-    REQUIRED_FIELDS = ['username']  # Keep username, but it's not unique
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['username']),
-            models.Index(fields=['email']),
-            models.Index(fields=['qr_code_data']),
-        ]
-        
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
-        return f"{self.username} ({self.email})"
+        return f"{self.username} ({self.role})"

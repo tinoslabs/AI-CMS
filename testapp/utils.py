@@ -1,22 +1,14 @@
 import qrcode
 from io import BytesIO
-from typing import Tuple, Optional
+from typing import Tuple
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils.crypto import get_random_string
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
 from email.mime.image import MIMEImage
-from io import BytesIO
-import hashlib
+import logging
+logger = logging.getLogger(__name__)
 
-#  for hashing the QR Data
-def hash_qr_data(qr_data: str) -> str:
-    return hashlib.sha256(qr_data.encode()).hexdigest()
-
-
-# logger = logging.getLogger(__name__)
 
 def generate_secure_qr_code(username: str) -> Tuple[str, BytesIO]:
     """
@@ -28,12 +20,9 @@ def generate_secure_qr_code(username: str) -> Tuple[str, BytesIO]:
     Returns:
         Tuple containing QR data string and BytesIO buffer with QR image
     """
-    # Generate a unique identifier with timestamp and random string
     unique_id = get_random_string(32)
     qr_data = f"EVENT-{settings.EVENT_ID}-{username}-{unique_id}"
     
-    ############## qr_data = hash_qr_data(qr_data) for hashing   ############ 
-
     try:
         qr = qrcode.QRCode(
             version=1,
@@ -46,12 +35,11 @@ def generate_secure_qr_code(username: str) -> Tuple[str, BytesIO]:
         
         buffer = BytesIO()
         qr.make_image(fill_color="black", back_color="white").save(buffer, format="PNG")
+        buffer.seek(0)  # Reset buffer to the start
         
         return qr_data, buffer
     except Exception as e:
-        # logger.error(f"QR Generation failed for user {username}: {str(e)}")
         raise
-
 
 
 def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
@@ -67,17 +55,16 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
         Boolean indicating success/failure
     """
     try:
-        # Prepare email content using templates
         context = {
             'username': username,
             'event_name': settings.EVENT_NAME,
             'event_date': settings.EVENT_DATE,
         }
         
-        html_content = render_to_string('emails/qr_code.html', context)
+        html_content = render_to_string('emails/index.html', context)
         text_content = render_to_string('emails/qr_code.txt', context)
 
-        # Create the email
+        # Create the email message
         email_message = EmailMultiAlternatives(
             subject=f"Your QR Code for {settings.EVENT_NAME}",
             body=text_content,
@@ -86,22 +73,43 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
             reply_to=[settings.EVENT_SUPPORT_EMAIL],
         )
         
-        # Attach the QR code image to the email
-        qr_buffer.seek(0)  # Reset buffer to the start
-        qr_image = MIMEImage(qr_buffer.read())  # Read the image from the buffer
-        qr_image.add_header('Content-ID', '<qr_code>')  # Set CID for inline reference
+        # Attach QR code with proper headers
+        qr_buffer.seek(0)
+        qr_image = MIMEImage(qr_buffer.read())
+        qr_image.add_header('Content-ID', '<qr_code>')
+        qr_image.add_header('Content-Disposition', 'inline')
+        qr_image.add_header('X-Attachment-Id', 'qr_code')
         email_message.attach(qr_image)
+        
+        # Attach partner logos
+        partner_images = {
+            'tinos': 'images/tinos.png',
+            'ezone': 'images/ezone.jpg',
+            'bbc': 'images/bbc logo-01-01-01-01 (1).png',
+            'sentinora': 'images/sentinora.png'
+        }
+        
+        for cid, image_path in partner_images.items():
+            try:
+                with open(image_path, 'rb') as img:
+                    img_data = img.read()
+                    img_mime = MIMEImage(img_data)
+                    img_mime.add_header('Content-ID', f'<{cid}>')
+                    img_mime.add_header('Content-Disposition', 'inline')
+                    img_mime.add_header('X-Attachment-Id', cid)
+                    email_message.attach(img_mime)
+            except Exception as e:
+                logger.warning(f"Could not attach partner image {cid}: {str(e)}")
 
-        # Attach HTML content with the CID reference
+        # Attach HTML version
         email_message.attach_alternative(html_content, "text/html")
         
         # Send the email
         email_message.send(fail_silently=False)
         
-        # logger.info(f"QR code email sent successfully to {username}")
         return True
         
     except Exception as e:
-        # logger.error(f"Failed to send QR code email to {username}: {str(e)}")
+        logger.error(f"Failed to send email: {str(e)}")
         raise
 
