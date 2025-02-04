@@ -14,7 +14,9 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from hashlib import sha256
 from django.utils import timezone
 from django.shortcuts import render
-
+# # from deepface import DeepFace
+# import cv2
+# from django.http import JsonResponse
 
 
 logger = logging.getLogger(__name__)
@@ -30,58 +32,26 @@ class RegistrationRateThrottle(AnonRateThrottle):
 @permission_classes([IsAuthenticated])
 @transaction.atomic  # Ensures rollback if something fails
 def register_user(request):
-    print("Received registration request")
     try:
-        print("Request data:", request.data)
         serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            print("Serializer validation passed")
             username = serializer.validated_data['username']
             email = serializer.validated_data['email']
             user_image = serializer.validated_data['user_image']  # Now mandatory
             phone_number = serializer.validated_data['phone_number']  # Now mandatory
             designation = serializer.validated_data['designation']
-            print("**********",designation)
 
-            # fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
-
-            # try:
-            #     # Hash the fingerprint before saving
-            #     fingerprint_hash = sha256(fingerprint_data.encode()).hexdigest()
-
-            #     # Ensure no duplicate fingerprints exist
-            #     if User.objects.filter(fingerprint_template_hash=fingerprint_hash).exists():
-            #         return Response({"error": "Fingerprint already registered."}, status=400)
-
-            #     # Save fingerprint to user
-            #     fingerprint_template = fingerprint_data.encode()  # Save raw data (optional)
-            #     fingerprint_template_hash = fingerprint_hash  # Save hash for matching
-
-            # except Exception as e:
-            #     return Response({"error": "Error saving fingerprint."}, status=500)
-
-            # if not fingerprint_data:
-            #     return Response({"error": "Fingerprint data is required."}, status=status.HTTP_400_BAD_REQUEST)
-
-            # mail sending
+         
             try:
-                print("Generating QR code")
                 qr_data, qr_buffer = generate_secure_qr_code(username)
-                print("QR code generated successfully")
 
-                print(f"Sending email to {email}")
                 email_sent = send_email_with_qr(email, username, qr_buffer)
-                print("Email sent status:", email_sent)
 
                 if not email_sent:
-                    print("Email failed to send")
                     return Response({"error": "Failed to send QR code email. Please try again."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             except Exception as e:
-                logger.error(f"Email sending failed for {email}: {str(e)}")
-                print("Exception during email sending:", e)
                 return Response({"error": "Invalid email or email sending failed."}, status=status.HTTP_400_BAD_REQUEST)
 
-            print("Creating user")
             user = User.objects.create(
                 username=username,
                 email=email,
@@ -95,11 +65,9 @@ def register_user(request):
                 # fingerprint_template_hash = fingerprint_template_hash,                
                 fingerprint_verified = False
             )
-            print("User created successfully")
 
             qr_buffer.seek(0)
             user.qr_code.save(f'qr_code_{username}.jpg', ContentFile(qr_buffer.getvalue()), save=True)
-            print("QR code saved to user model")
 
             response_data = {
                 "message": "Registration successful. Please check your email for the QR code.",
@@ -113,7 +81,6 @@ def register_user(request):
                     "delivered": user.qr_delivered
                 }
             }
-            print("Response data:", response_data)
             return Response(response_data, status=status.HTTP_201_CREATED)
         else:
             print("Serializer validation failed:", serializer.errors)
@@ -169,28 +136,24 @@ def verify_fingerprint(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def verify_qr_code(request):
-    print("Received QR code verification request")
     qr_data = request.data.get('qr_code_data')
-    print("QR Code Data received:", qr_data)
     
     if not qr_data:
-        print("Missing QR code data in request")
         return Response({"error": "QR code data is required."}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
         user = User.objects.get(qr_code_data=qr_data)
-        print("User found for QR code")
 
         if user.qr_verified:
-            print("QR code already verified")
             return Response({"error": "This QR code has already been verified."}, status=status.HTTP_400_BAD_REQUEST)
 
-        user.qr_verified = True
+        # user.qr_verified = True
+        user.qr_verified = False
+
         user.verified_by = request.user
         user.verified_at = timezone.now()
         user.save()
-        print("QR code verified and user updated")
-
+        
         # return Response({
         #     "message": "QR code verified successfully.",
         #     "user": {
@@ -212,10 +175,10 @@ def verify_qr_code(request):
         }, status=status.HTTP_200_OK)
 
     except User.DoesNotExist:
-        print("Invalid QR code data. User not found.")
+        
         return Response({"error": "Invalid QR code data. User not found."}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
-        print("Unexpected error during verification:", e)
+        
         return Response({"error": "An unexpected error occurred during verification."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
@@ -271,3 +234,69 @@ def logout_view(request):
         return Response({'error': f'An error occurred: {str(e)}'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def verify_face(request):
+#     """
+#     Face verification using DeepFace. Returns the facial area and the matched name.
+#     """
+
+#     # Get uploaded image from request
+#     face_image = request.FILES.get('face_image')
+    
+#     if not face_image:
+#         return JsonResponse({"error": "No face image provided"}, status=400)
+
+#     # Save the uploaded image temporarily
+#     temp_path = f"/tmp/{face_image.name}"
+#     with open(temp_path, "wb") as f:
+#         for chunk in face_image.chunks():
+#             f.write(chunk)
+
+#     try:
+#         # Perform face recognition
+#         dfs = DeepFace.find(
+#             img_path=temp_path,
+#             db_path="media/user_images",
+#             model_name="Facenet512",
+#             enforce_detection=False
+#         )
+
+#         if not dfs or len(dfs[0]) == 0:
+#             return JsonResponse({"error": "No matching face found"}, status=404)
+
+#         # Get the first match
+#         df = dfs[0]
+#         matched_instance = df.iloc[0]
+        
+#         # Extract image path and bounding box coordinates
+#         source_path = matched_instance["identity"]
+#         x, y, w, h = int(matched_instance["target_x"]), int(matched_instance["target_y"]), int(matched_instance["target_w"]), int(matched_instance["target_h"])
+
+#         # Read and crop the matched face
+#         source_img = cv2.imread(source_path)
+#         face_cropped = source_img[y:y+h, x:x+w]
+
+#         # Convert cropped image to JPEG
+#         _, buffer = cv2.imencode(".jpg", face_cropped)
+#         face_bytes = BytesIO(buffer)
+
+#         # Convert to Django's InMemoryUploadedFile for easy response handling
+#         face_file = InMemoryUploadedFile(face_bytes, None, "face.jpg", "image/jpeg", face_bytes.getbuffer().nbytes, None)
+
+#         # Extract the matched person's name (filename without extension)
+#         matched_name = os.path.splitext(os.path.basename(source_path))[0]
+
+#         # Return response with name and image
+#         return JsonResponse({
+#             "matched_name": matched_name,
+#             "cropped_face": face_file.name
+#         })
+
+#     except Exception as e:
+#         return JsonResponse({"error": str(e)}, status=500)
+
+#     finally:
+#         # Clean up temp file
+#         if os.path.exists(temp_path):
+#             os.remove(temp_path)
