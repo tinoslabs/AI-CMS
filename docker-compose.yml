@@ -1,0 +1,108 @@
+version: '3.11'
+
+services:
+  web-dev:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/project
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - development
+
+  web:
+    build: .
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - static_volume:/project/staticfiles
+      - media_volume:/project/mediafiles
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles:
+      - production
+
+  db:
+    image: mysql:8.3
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "db"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    profiles:
+      - development
+      - production
+  
+  redis:
+    image: redis:7
+    profiles:
+      - development
+      - production
+  
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        DOMAIN: ${DOMAIN}
+        CONF_NAME: ssl
+    restart: always
+    ports:
+      - ${NGINX_PORT}:80
+      - 443:443
+    volumes:
+      - static_volume:/project/staticfiles
+      - media_volume:/project/mediafiles
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    profiles:
+      - nginx
+
+  
+  nginx-init:
+    build:
+      context: ./nginx
+      args:
+        DOMAIN: ${DOMAIN}
+        CONF_NAME: init
+    restart: always
+    ports:
+      - ${NGINX_PORT}:80
+      - 443:443
+    volumes:
+      - static_volume:/project/staticfiles
+      - media_volume:/project/mediafiles
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    profiles:
+      - nginx-init
+
+  certbot:
+    image: certbot/certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/html
+    command: certonly --webroot --webroot-path=/var/www/html --force-renewal --no-eff-email --email ${EMAIL_HOST_USER} -d ${DOMAIN} -d www.${DOMAIN} --agree-tos
+    profiles: 
+      - ssl-init
+
+volumes:
+  static_volume: 
+  media_volume:
+  mysql_data:
