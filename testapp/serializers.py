@@ -30,13 +30,13 @@ from .models import User
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(required=True, max_length=15)
-    fingerprint_data = serializers.CharField(required=False, allow_null=True)
+    # fingerprint_data = serializers.CharField(required=False, allow_null=True)
     user_image = serializers.ImageField(required=True)  # Ensure image is mandatory
 
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone_number', 'user_image', 'fingerprint_data']
+        fields = ['username', 'email', 'phone_number', 'user_image']
 
     def validate_email(self, value):
         """Ensure email is unique"""

@@ -78,7 +78,7 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
             body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[email],
-            reply_to=[settings.EVENT_SUPPORT_EMAIL],
+            # reply_to=[settings.EVENT_SUPPORT_EMAIL],
         )
         
         # Attach QR code with proper headers
@@ -89,25 +89,25 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
         qr_image.add_header('X-Attachment-Id', 'qr_code')
         email_message.attach(qr_image)
         
-        # Attach partner logos
-        partner_images = {
-            'tinos': 'images/tinos.png',
-            'ezone': 'images/ezone.jpg',
-            'bbc': 'images/bbc logo-01-01-01-01 (1).png',
-            'sentinora': 'images/sentinora.png'
-        }
+        # # Attach partner logos
+        # partner_images = {
+        #     'tinos': 'images/tinos.png',
+        #     'ezone': 'images/ezone.jpg',
+        #     'bbc': 'images/bbc logo-01-01-01-01 (1).png',
+        #     'sentinora': 'images/sentinora.png'
+        # }
         
-        for cid, image_path in partner_images.items():
-            try:
-                with open(image_path, 'rb') as img:
-                    img_data = img.read()
-                    img_mime = MIMEImage(img_data)
-                    img_mime.add_header('Content-ID', f'<{cid}>')
-                    img_mime.add_header('Content-Disposition', 'inline')
-                    img_mime.add_header('X-Attachment-Id', cid)
-                    email_message.attach(img_mime)
-            except Exception as e:
-                logger.warning(f"Could not attach partner image {cid}: {str(e)}")
+        # for cid, image_path in partner_images.items():
+        #     try:
+        #         with open(image_path, 'rb') as img:
+        #             img_data = img.read()
+        #             img_mime = MIMEImage(img_data)
+        #             img_mime.add_header('Content-ID', f'<{cid}>')
+        #             img_mime.add_header('Content-Disposition', 'inline')
+        #             img_mime.add_header('X-Attachment-Id', cid)
+        #             email_message.attach(img_mime)
+        #     except Exception as e:
+        #         logger.warning(f"Could not attach partner image {cid}: {str(e)}")
 
         # Attach HTML version
         email_message.attach_alternative(html_content, "text/html")
@@ -130,4 +130,5 @@ def compare_fingerprints(stored_hash, input_template):
     """
     input_hash = sha256(input_template).hexdigest()
     return stored_hash == input_hash
+
 

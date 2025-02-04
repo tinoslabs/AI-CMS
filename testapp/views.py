@@ -37,22 +37,22 @@ def register_user(request):
             user_image = serializer.validated_data['user_image']  # Now mandatory
             phone_number = serializer.validated_data['phone_number']  # Now mandatory
 
-            fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
+            # fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
 
-            try:
-                # Hash the fingerprint before saving
-                fingerprint_hash = sha256(fingerprint_data.encode()).hexdigest()
+            # try:
+            #     # Hash the fingerprint before saving
+            #     fingerprint_hash = sha256(fingerprint_data.encode()).hexdigest()
 
-                # Ensure no duplicate fingerprints exist
-                if User.objects.filter(fingerprint_template_hash=fingerprint_hash).exists():
-                    return Response({"error": "Fingerprint already registered."}, status=400)
+            #     # Ensure no duplicate fingerprints exist
+            #     if User.objects.filter(fingerprint_template_hash=fingerprint_hash).exists():
+            #         return Response({"error": "Fingerprint already registered."}, status=400)
 
-                # Save fingerprint to user
-                fingerprint_template = fingerprint_data.encode()  # Save raw data (optional)
-                fingerprint_template_hash = fingerprint_hash  # Save hash for matching
+            #     # Save fingerprint to user
+            #     fingerprint_template = fingerprint_data.encode()  # Save raw data (optional)
+            #     fingerprint_template_hash = fingerprint_hash  # Save hash for matching
 
-            except Exception as e:
-                return Response({"error": "Error saving fingerprint."}, status=500)
+            # except Exception as e:
+            #     return Response({"error": "Error saving fingerprint."}, status=500)
 
             # if not fingerprint_data:
             #     return Response({"error": "Fingerprint data is required."}, status=status.HTTP_400_BAD_REQUEST)
@@ -84,8 +84,8 @@ def register_user(request):
                 user_image=user_image,  # Now mandatory
                 qr_delivered=True,
                 qr_verified=False,
-                fingerprint_template = fingerprint_template,
-                fingerprint_template_hash = fingerprint_template_hash,                
+                # fingerprint_template = fingerprint_template,
+                # fingerprint_template_hash = fingerprint_template_hash,                
                 fingerprint_verified = False
             )
             print("User created successfully")
