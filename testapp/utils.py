@@ -69,7 +69,7 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
             'event_date': settings.EVENT_DATE,
         }
         
-        html_content = render_to_string('emails/index.html', context)
+        html_content = render_to_string('emails/mail_index.html', context)
         text_content = render_to_string('emails/qr_code.txt', context)
 
         # Create the email message
@@ -89,27 +89,7 @@ def send_email_with_qr(email: str, username: str, qr_buffer: BytesIO) -> bool:
         qr_image.add_header('X-Attachment-Id', 'qr_code')
         email_message.attach(qr_image)
         
-        # # Attach partner logos
-        # partner_images = {
-        #     'tinos': 'images/tinos.png',
-        #     'ezone': 'images/ezone.jpg',
-        #     'bbc': 'images/bbc logo-01-01-01-01 (1).png',
-        #     'sentinora': 'images/sentinora.png'
-        # }
-        
-        # for cid, image_path in partner_images.items():
-        #     try:
-        #         with open(image_path, 'rb') as img:
-        #             img_data = img.read()
-        #             img_mime = MIMEImage(img_data)
-        #             img_mime.add_header('Content-ID', f'<{cid}>')
-        #             img_mime.add_header('Content-Disposition', 'inline')
-        #             img_mime.add_header('X-Attachment-Id', cid)
-        #             email_message.attach(img_mime)
-        #     except Exception as e:
-        #         logger.warning(f"Could not attach partner image {cid}: {str(e)}")
-
-        # Attach HTML version
+                
         email_message.attach_alternative(html_content, "text/html")
         
         # Send the email

@@ -32,11 +32,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     phone_number = serializers.CharField(required=True, max_length=15)
     # fingerprint_data = serializers.CharField(required=False, allow_null=True)
     user_image = serializers.ImageField(required=True)  # Ensure image is mandatory
-
+    designation = serializers.CharField(required=True, max_length=15)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone_number', 'user_image']
+        fields = ['username', 'email', 'phone_number', 'user_image', 'designation']
 
     def validate_email(self, value):
         """Ensure email is unique"""
@@ -56,6 +56,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         """Ensure user_image is provided"""
         if not value:
             raise serializers.ValidationError("User image is required.")
+        return value
+    
+    def validate_designation(self, value):
+        """Ensure user_image is provided"""
+        if not value:
+            raise serializers.ValidationError("Designation is required.")
         return value
 
     def create(self, validated_data):

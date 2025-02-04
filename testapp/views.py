@@ -13,11 +13,15 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from hashlib import sha256
 from django.utils import timezone
+from django.shortcuts import render
 
 
 
 logger = logging.getLogger(__name__)
 
+
+def index(request):
+    return render(request, 'index.html')
 
 class RegistrationRateThrottle(AnonRateThrottle):
     rate = '24/hour'  # Limit registration attempts
@@ -36,6 +40,8 @@ def register_user(request):
             email = serializer.validated_data['email']
             user_image = serializer.validated_data['user_image']  # Now mandatory
             phone_number = serializer.validated_data['phone_number']  # Now mandatory
+            designation = serializer.validated_data['designation']
+            print("**********",designation)
 
             # fingerprint_data = serializer.validated_data.get('fingerprint_data', None)
 
@@ -80,6 +86,7 @@ def register_user(request):
                 username=username,
                 email=email,
                 phone_number=phone_number,  # Now mandatory
+                designation=designation,
                 qr_code_data=qr_data,
                 user_image=user_image,  # Now mandatory
                 qr_delivered=True,
@@ -100,6 +107,7 @@ def register_user(request):
                     "username": user.username,
                     "email": user.email,
                     "phone_number": user.phone_number,
+                    "designation":designation,
                     "user_image_url": request.build_absolute_uri(user.user_image.url) if user.user_image else None,
                     "qr_code_url": user.qr_code.url if user.qr_code else None,
                     "delivered": user.qr_delivered
@@ -133,7 +141,8 @@ def verify_fingerprint(request):
         for user in users_with_fingerprints:
             if compare_fingerprints(user.fingerprint_template_hash, fingerprint_data):
                 # Step 3: If match found, mark fingerprint as verified and return user details
-                user.fingerprint_verified = True
+                # user.fingerprint_verified = True
+                user.fingerprint_verified = False
                 user.save()
 
                 # Return the user account details

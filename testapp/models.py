@@ -21,6 +21,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=150, unique=False)  # Allow duplicate usernames
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
+    designation = models.CharField(max_length=255, null=True, blank=True)  # Removed unique=True
 
     user_image = models.ImageField(
         upload_to=user_image_upload_path,

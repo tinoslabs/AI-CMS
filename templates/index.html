@@ -1,0 +1,690 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Meta tags -->
+    <meta name="description" content="AICEMS">
+    <meta name="author" content="ThemeTags">
+
+    <!-- Social media meta tags -->
+    <meta name="twitter:site" content="@themetags">
+    <meta name="twitter:creator" content="@themetags">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AICEMS">
+    <meta name="twitter:description" content="AICEMS">
+    <meta name="twitter:image" content="#">
+
+    <meta property="og:url" content="#">
+    <meta property="og:title" content="AICEMS">
+    <meta property="og:description" content="AICEMS">
+    <meta property="og:image" content="#">
+    <meta property="og:image:secure_url" content="#">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="600">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'assets/img/tinos.png' %}" type="image/png" sizes="16x16">
+
+    <title>AICEMS - AI Integrated Crowd & Event Management Software</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+</head>
+
+<body>
+
+    <!--preloader start-->
+    <div id="preloader" class="bg-light-subtle">
+        <div class="preloader-wrap">
+            <img src="{% static 'assets/img/tinos.png' %}" alt="logo" class="img-fluid preloader-icon">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+    <!--preloader end-->
+    <div class="main-wrapper">
+
+        <!--header section start-->
+        <header class="main-header w-100 z-10">
+            <nav class="navbar navbar-expand-xl navbar-light sticky-header">
+                <div class="container d-flex align-items-center justify-content-lg-between position-relative">
+                    <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center mb-md-0 text-decoration-none">
+                        <img src="{% static 'assets/img/13.png' %}" alt="logo" class="img-fluid logo-white" style="height: 60px;width:90"/>
+                        <img src="{% static 'assets/img/13.png'  %}" alt="logo" class="img-fluid logo-color" style="height: 80px;width:90"/>
+                    </a>
+
+                    <a class="navbar-toggler position-absolute right-0 border-0" href="#offcanvasWithBackdrop" role="button">
+                        <i class="flaticon-menu"
+    	                   data-bs-toggle="offcanvas"
+    	                   data-bs-target="#offcanvasWithBackdrop"
+    	                   aria-controls="offcanvasWithBackdrop"></i>
+                    </a>
+                    <div class="clearfix"></div>
+                    <div class="collapse navbar-collapse justify-content-center">
+                        <ul class="nav col-12 col-md-auto justify-content-center main-menu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Home</a>
+                                <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white homepage-list-wrapper">
+                                    
+                            </li>
+                            <li><a href="#service" class="nav-link" >Services</a></li>
+                            <li><a href="#about" class="nav-link" >About</a></li>
+                            <li><a href="#contact" class="nav-link" >Contact</a></li>
+                            
+                            <!-- <li><a href="pricing.html" class="nav-link">Pricing</a></li> -->
+                            
+                        </ul>
+                    </div>
+
+                    <div class="action-btns text-end me-5 me-lg-0 d-none d-md-block d-lg-block">
+                        <a href="javascript:void(0)" class="btn btn-link p-1 tt-theme-toggle">
+                            <div class="tt-theme-light" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Light"><i class="flaticon-sun-1 fs-lg"></i></div>
+                            <div class="tt-theme-dark" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Dark"><i class="flaticon-moon-1 fs-lg"></i></div>
+                        <!-- </a> <a href="login.html" class="btn btn-link text-decoration-none me-2">Sign In</a> -->
+                        <a href="#contact" class="btn btn-primary">Get Start</a>
+                    </div>
+                </div>
+            </nav>
+            <!--offcanvas menu start-->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasWithBackdrop">
+                <div class="offcanvas-header d-flex align-items-center mt-4">
+                    <a href="{% url 'index' %}" class="d-flex align-items-center mb-md-0 text-decoration-none">
+                        <img src="{% static 'assets/img/13.png' %}" alt="logo" class="img-fluid ps-2"  />
+                    </a>
+                    <button type="button" class="close-btn text-danger" data-bs-dismiss="offcanvas" aria-label="Close">
+                        <i class="flaticon-cancel"></i>
+                    </button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="nav col-12 col-md-auto justify-content-center main-menu">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Home
+                            </a>
+                            
+                        </li>
+                        <li><a href="#service" class="nav-link">Service</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
+                        
+                        <!-- <li><a href="pricing.html" class="nav-link">Pricing</a></li> -->
+                        
+                        
+                    </ul>
+                    <!-- <div class="action-btns mt-4 ps-3">
+                        <a href="login.html" class="btn btn-outline-primary me-2">Login</a>
+                        <a href="request-demo.html" class="btn btn-primary">Get Started</a>
+                    </div> -->
+                </div>
+            </div>
+            <!--offcanvas menu end-->
+        </header> <!--header section end-->
+
+        <!-- Hero -->
+        <div class="rm-hero pt-120 pb-120 position-relative overflow-hidden">
+            <div class="container">
+                <div class="position-relative">
+                    <div class="row align-items-center justify-content-between">
+                        <div class="col-lg-6">
+                            <h1 class="rm-hero-title text-white fs-72 fw-800 ff-risk-pri mb-20"> AI Integrated <span
+    								class="risk-gd-text">Crowd & Event</span> <br>
+                                <span class="text-ind">Management Software</span>
+                                <!-- <span><img src="assets/img/risk_managment/font.png" alt=""></span> -->
+                            </h1>
+                            <p class="text-white fs-20 ff-dmsans fw-500 flh-28">There are many variations of passages of
+                                Loren
+                                epsom
+                                available
+                                but the majority have suffered alteration by injected.</p>
+                            <a href="#contact" class="btn risk-btn-bg risk-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-30">Get Start</a>
+                            <div class="risk-customer-area mt-60">
+                                <p class="text-white ff-risk-pri fw-600">See how over 7,700 customers <span
+    									class="risk-highlight-color fw-800">Help the world work</span></p>
+                                <div class="risk-customer-logo-wrapper d-flex align-items-center gap-10 flex-wrap">
+                                    <img class="risk-customer-logo" src="{% static 'assets/img/bbc.png' %}" alt="" style="height: 80px;width:80px;">
+                                    <img class="risk-customer-logo" src="{% static 'assets/img/44.png' %}" alt="" style="height: 60px;width:80px;">
+                                    <img class="risk-customer-logo" src="{% static 'assets/img/55.png' %}" alt="" style="height: 80px;width:80px;">
+                                    <img class="risk-customer-logo" src="{% static 'assets/img/66.png' %}" alt="" style="height: 100px;width:100px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-8">
+                            <div class="position-relative">
+                                <img src="{% static 'assets/img/risk_managment/hero.png' %}" alt="" class="risk-hero-img img-fluid">
+                                <a href="" class="risk-click-btn risk-gd-bg rounded-circle d-flex align-items-center justify-content-center position-absolute">
+                                    <svg width="25" height="32" viewBox="0 0 25 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1.39397 1.4711C1.39397 1.4711 11.7558 16.9705 21.1011 30.9492M21.1011 30.9492C14.3501 20.851 23.4213 12.0896 23.4213 12.0896M21.1011 30.9492C14.3501 20.851 2.78667 25.8846 2.78667 25.8846" stroke="white" stroke-width="2" />
+                                    </svg>
+                                </a>
+                                <div class="risk-social d-flex align-items-center flex-column gap-20">
+                                    <a class="d-flex align-items-center gap-1 ff-risk-pri fs-14 fw-700" href=""><span><i
+    											class="fa-brands fa-facebook-f"></i></span>Facebook</a>
+                                    <a class="d-flex align-items-center gap-1 ff-risk-pri fs-14 fw-700" href=""><span><i
+    											class="fa-brands fa-linkedin"></i></span>LinkedIn</a>
+                                    <a class="d-flex align-items-center gap-1 ff-risk-pri fs-14 fw-700" href=""><span><i
+    											class="fa-brands fa-instagram"></i></span>Instagram</a>
+                                    <a class="d-flex align-items-center gap-1 ff-risk-pri fs-14 fw-700" href=""><span><i
+    											class="fa-brands fa-twitter"></i></span>Twitter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="{% static 'assets/img/risk_managment/shape/hero.png' %}" alt="" class="hero-shape position-absolute">
+                </div>
+            </div>
+        </div>
+        <!-- Hero -->
+
+        <!-- Info Card -->
+        <div class="rm-info-card-area ptb-120" id="service">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-8">
+                        <div class="text-center">
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
+                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-30">AICEMS Solutions to <span
+    								class="risk-gd-text">Bridge Your</span>
+                                <span class="risk-highlight-color">Risk </span>Journey Across
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
+                            <img src="{% static 'assets/img/risk_managment/info_card.svg' %}" alt="">
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Enterprise <br>
+                                <span class="risk-bg-color"></span>Risk Management
+                            </h5>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
+                                passages of
+                                available but the alteration
+                                by injected.</p>
+                            <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
+                            <img src="{% static 'assets/img/risk_managment/info_card_2.svg' %}" alt="">
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Third Party <br>
+                                <span class="risk-bg-color"></span>Risk Management
+                            </h5>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
+                                passages of
+                                available but the alteration
+                                by injected.</p>
+                            <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
+                            <img src="{% static 'assets/img/risk_managment/info_card_3.svg' %}" alt="">
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Financial<br>
+                                <span class="risk-bg-color"></span>Controls
+                            </h5>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
+                                passages of
+                                available but the alteration
+                                by injected.</p>
+                            <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
+                            <img src="{% static 'assets/img/risk_managment/info_card_4.svg' %}" alt="">
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Compliance<br>
+                                <span class="risk-bg-color"></span>Management
+                            </h5>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
+                                passages of
+                                available but the alteration
+                                by injected.</p>
+                            <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-40">
+                    <p class="risk-color fs-16 ff-risk-pri fw-700 flh-24 mb-0">We Are Available For New Custom Prject. <span
+    						class="risk-gd-text fw-800">Let’s Connect
+    						Now</span></p>
+                </div>
+            </div>
+        </div>
+        <!-- Info Card -->
+
+        <!-- Service -->
+        <div class="rm-service-area risk-bg-color-two pt-120 position-relative">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="position-relative">
+                            <img src="{% static 'assets/img/risk_managment/service.png' %}" alt="" class="rm-service-img img-fluid">
+                            <img src="{% static 'assets/img/risk_managment/shape/service.png' %}" alt="" class="s-one position-absolute">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="pr-40">
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
+                            <h2 class="risk-title text-white fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-15">Simplify
+                                Compliance & Manage
+                                <span class="risk-gd-text">Risk with Quiety</span> One GRC Software
+                            </h2>
+                            <p class="text-white ff-dmsans fs-16 flh-28 mb-0 mt-20">All-in-one Governance, Risk, and
+                                Compliance
+                                (GRC) software. Our comprehensive solution empowers your organization to efficiently
+                                Navigate
+                                the complex landscape.</p>
+                            <ul class="risk-service-list list-unstyled mb-0 mt-40">
+                                <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
+                                    <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
+                                        1
+                                    </div>
+                                    Stay Compliant with Global Regulations
+                                </li>
+                                <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
+                                    <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
+                                        2
+                                    </div>
+                                    Oversee of all your GRC initiatives
+                                </li>
+                                <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
+                                    <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
+                                        3
+                                    </div>
+                                    Oversee of all your GRC initiatives
+                                </li>
+                            </ul>
+                            <a href="#contact" class="btn risk-btn-bg risk-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-30">
+                                Get Start</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="risk-gd-border-line mt-60"></div>
+            </div>
+            <img src="{% static 'assets/img/risk_managment/shape/service_2.png' %}" alt="" class="s-two position-absolute">
+            <img src="{% static 'assets/img/risk_managment/shape/service_3.png' %}" alt="" class="s-three position-absolute">
+        </div>
+        <!-- Service -->
+
+        <!-- Counter -->
+        <div class="rm-counter-area risk-bg-color-two pt-60 pb-120">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-xxl-4">
+                        <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Fun Facts</h6>
+                        <h2 class="text-white fs-36 ff-risk-pri flh-44 fw-800 mb-20 fch-14">The Numbers tell
+                            Our Story
+                        </h2>
+                        <p class="text-white ff-dmsans fs-16 flh-24 mb-0">Far and wide, we’re known for our dedication to
+                            governance, risk compliance.</p>
+                    </div>
+                    <div class="col-xxl-7">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="risk-counter-item mt-20">
+                                    <h3 class="text-white fs-56 ff-dmsans fw-700"><span class="counter">2</span>millions
+                                    </h3>
+                                    <p class="text-white ff-dmsans fs-16 flh-24 mb-0">People and employees
+                                        Worldwide</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="risk-counter-item risk-border-left risk-border-color pl-40 mt-20">
+                                    <h3 class="text-white fs-56 ff-dmsans fw-700"><span class="counter">40</span>k+
+                                    </h3>
+                                    <p class="text-white ff-dmsans fs-16 flh-24 mb-0">People and employees
+                                        Worldwide</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="risk-counter-item risk-border-left risk-border-color pl-40 mt-20">
+                                    <h3 class="text-white fs-56 ff-dmsans fw-700"><span class="counter">90</span>+
+                                    </h3>
+                                    <p class="text-white ff-dmsans fs-16 flh-24 mb-0">of Ethisphere’s World’s Most
+                                        Ethical Companies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Counter -->
+
+        <!-- Service Content -->
+        <div class="rm-service-content-area pt-60 pb-60" id="about">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6">
+                        <div class="position-relative">
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
+                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20">Connect Across Business
+                                Areas to
+                                <span class="risk-gd-text">Prioritize Risk</span>
+                            </h2>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Our software was purpose
+                                built to
+                                be
+                                interconnected across enterprise governance areas and our clients’ core systems – serving as
+                                a
+                                single source of truth for your Organizations. Identify high-risk zones for management, and
+                                finance. LogicManager facilitates inter-departmental collaboration, offering analytical
+                                insights
+                                that paint a vivid risk landscape you can allocate your resources strategically.</p>
+                            <a href="#contact" class="btn risk-outline-btn mt-40 risk-color ff-risk-pri fs-14 fw-700">Get Start
+                                </a>
+                            <img src="{% static 'assets/img/risk_managment/shape/service_content.png' %}" alt="" class="s-one position-absolute">
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <img src="{% static 'assets/img/risk_managment/service_content.png' %}" alt="" class="risk-sc-img img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Service Content -->
+
+        <!-- Service Content Two -->
+        
+        <!-- Service Content Two -->
+
+        <!-- Cta -->
+        <div class="rm-cta-area risk-bg-color-two ptb-80 position-relative z-1">
+            <div class="container">
+                <div class="position-relative">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-7">
+                            <div class="text-center">
+                                <img src="{% static 'assets/img/risk_managment/cta.png' %}" alt="" class="risk-cta-img position-absolute z--1">
+                                <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
+                                <h2 class="risk-title text-white fs-42 ff-risk-pri flh-56 fw-800">Discover the Value of
+                                    Risk Intelligence.
+                                </h2>
+                                <a href="#contact" class="btn risk-btn-bg risk-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-20">Get Start
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cta -->
+
+        <!-- Contact -->
+        <div class="rm-contact-area pt-120 pb-60 position-relative z-1" id="contact">
+            <img src="{% static 'assets/img/risk_managment/shape/contact_2.png' %}" alt="" class="s-two position-absolute z--1">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-5">
+                        <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Get In touch</h6>
+                        <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-20">We’re
+                            <span class="risk-gd-text">Committed to</span> your Success.
+                        </h2>
+                        <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Move from feeling ill-equipped and
+                            anxious about imminent catastrophe to outsmarting the bad actors and protecting your
+                            organization with confidence.</p>
+                    </div>
+                    <div class="col-lg-7">
+                        <div class="pl-50">
+                            <div class="risk-contact-form-bg risk-bg-color-two rounded-16 position-relative z-1 overflow-hidden">
+                                <div class="risk-form-box bgc-white rounded-12">
+                                    <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-24 mb-30">Get In Touch Now</h5>
+                                    <form action="#" class="risk-contact-form">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">First Name <span
+    														class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" placeholder="First Name" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Last Name <span
+    														class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" placeholder="Last Name" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Email <span
+    														class="risk-highlight-color">*</span></h6>
+                                                    <input type="email" placeholder="Email Adress" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Company Name <span
+    														class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" placeholder="Company Name" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Phone Number*</h6>
+                                                    <input type="number" placeholder="Phone No" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">How did You Hear About
+                                                        Us?</h6>
+                                                    <input type="text" placeholder="Write Here" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Country Reason</h6>
+                                                    <select name="rs-country" id="rs-country" class="form-control risk-input ca-two-border ca-two-border-color">
+                                                        <option value="Select Your Country">Select Your Country</option>
+                                                        <option value="Select Your Country">Select</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="risk-color-two ff-dmsans fs-12 flh-16 mb-0">Quiety will use the
+                                            information provided to contact you about products & services. You may opt out
+                                            of receiving these communications at any time. For more information see Quiety
+                                            <a href="">Privacy Policy</a>
+                                        </p>
+                                        <a href="" class="btn risk-btn-bg risk-outline-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-20">Start
+                                            Free Trial</a>
+                                    </form>
+                                </div>
+                                <img src="{% static 'assets/img/risk_managment/shape/contact.png' %}" alt="" class="s-one position-absolute z--1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact -->
+
+        <!-- Testimonial -->
+        <div class="rm-testimonial-area ptb-60">
+            <div class="container">
+                <div class="risk-bg-color-three ptb-80 pl-50 pr-50 rounded-12 position-relative z-1">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-20">Real Stories_
+                                <span class="risk-gd-text">Real Impact</span>
+                            </h2>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Move from feeling ill-equipped and
+                                anxious about imminent catastrophe to outsmarting the bad actors & protecting.</p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="text-end">
+                                <a href="" class="btn risk-btn-bg risk-outline-btn-hover clr-white ff-risk-pri fs-14 fw-600">Read
+                                    their Stories</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="risk-testimonial-items ptb-20 swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
+                                        <div class="rm-testimonial-info">
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
+                                            <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                    <p class="risk-color-two fs-16 ff-dmsans flh-24 mt-20 mb-0"> “Interactively redefine
+                                        progressive networks. Synergistically integrate dynamic solutions vis-a-vis
+                                        resource maximizing roi”</p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
+                                        <div class="rm-testimonial-info">
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
+                                            <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                    <p class="risk-color-two fs-16 ff-dmsans flh-24 mt-20 mb-0"> “Interactively redefine
+                                        progressive networks. Synergistically integrate dynamic solutions vis-a-vis
+                                        resource maximizing roi”</p>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
+                                        <div class="rm-testimonial-info">
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
+                                            <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
+                                        </div>
+                                    </div>
+                                    <p class="risk-color-two fs-16 ff-dmsans flh-24 mt-20 mb-0"> “Interactively redefine
+                                        progressive networks. Synergistically integrate dynamic solutions vis-a-vis
+                                        resource maximizing roi”</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="risk-slider__controls">
+                            <div class="risk-slider__pagination"></div>
+                        </div>
+                    </div>
+                    <img src="{% static 'assets/img/risk_managment/shape/testimonial.png' %}" alt="" class="s-one position-absolute z--1">
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial -->
+
+        <!-- Blog -->
+        
+        <!-- Blog -->
+
+        <!-- Footer -->
+        <div class="rm-footer-area">
+            <div class="rm-footer-top position-relative z-1">
+                <div class="container">
+                    <div class="row justify-content-between">
+                        <div class="col-xl-3 col-lg-5">
+                            <div class="footer-single-col">
+                                <img src="{% static 'assets/img/footer1.png' %}" alt="" style="height: 100px;width:200px;">
+                                <p class="text-white flh-24 mt-20 mb-30">Interactively disseminate client-based
+                                    functionalities
+                                    and resource-leveeing Competently network equity invested web-readiness We take step
+                                    wise
+                                    for your
+                                    We helping to client with our talented expert.</p>
+                                <ul class="list-unstyled list-inline footer-social-list d-flex mb-0">
+                                    <li class="list-inline-item"><a href="#" class="bgc-white risk-color"><i
+    											class="fab fa-facebook-f"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="bgc-white risk-color"><i
+    											class="fab fa-instagram"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="bgc-white risk-color"><i
+    											class="fab fa-dribbble"></i></a></li>
+                                    <li class="list-inline-item"><a href="#" class="bgc-white risk-color"><i
+    											class="fab fa-github"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-5">
+                            <div class="footer-single-col pl-40">
+                                <h3 class="text-white">Pages</h3>
+                                <ul class="list-unstyled footer-nav-list mb-lg-0">
+                                    <li><a href="pricing.html" class="text-decoration-none">Pricing</a></li>
+                                    <li><a href="blog.html" class="text-decoration-none">Blog</a></li>
+                                    <li><a href="blog-single.html" class="text-decoration-none">Blog Details</a></li>
+                                    <li><a href="contact-us.html" class="text-decoration-none">Contact</a></li>
+                                    <li><a href="career-single.html" class="text-decoration-none">Career Single</a>
+                                    </li>
+                                    <li><a href="service-single.html" class="text-decoration-none">Services
+                                            Single</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-5">
+                            <div class="footer-single-col pr-20">
+                                <h3 class="text-white">Contact</h3>
+                                <ul class="list-unstyled footer-nav-list mb-lg-0">
+                                    <li><a href="pricing.html" class="text-decoration-none d-flex align-items-center gap-4">
+                                            <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.9395 0C16.2805 0 17.5705 0.53 18.5195 1.481C19.4695 2.43 20.0005 3.71 20.0005 5.05V12.95C20.0005 15.74 17.7305 18 14.9395 18H5.06049C2.26949 18 0.000488281 15.74 0.000488281 12.95V5.05C0.000488281 2.26 2.25949 0 5.06049 0H14.9395ZM16.0705 5.2C15.8605 5.189 15.6605 5.26 15.5095 5.4L11.0005 9C10.4205 9.481 9.58949 9.481 9.00049 9L4.50049 5.4C4.18949 5.17 3.75949 5.2 3.50049 5.47C3.23049 5.74 3.20049 6.17 3.42949 6.47L3.56049 6.6L8.11049 10.15C8.67049 10.59 9.34949 10.83 10.0605 10.83C10.7695 10.83 11.4605 10.59 12.0195 10.15L16.5305 6.54L16.6105 6.46C16.8495 6.17 16.8495 5.75 16.5995 5.46C16.4605 5.311 16.2695 5.22 16.0705 5.2Z" fill="#D7D7D7"></path>
+                                            </svg>
+                                            hello@themetags.com
+                                        </a></li>
+                                    <li><a href="pricing.html" class="text-decoration-none d-flex align-items-center gap-4">
+                                            <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M15.1905 12.7301C14.7439 12.6218 14.2939 12.901 14.1881 13.3485C14.0814 13.7959 14.3589 14.2451 14.8064 14.3509C17.3946 14.9651 18.333 15.8734 18.333 16.3351C18.333 17.3309 15.0097 18.835 9.99981 18.835C4.99073 18.835 1.66665 17.3309 1.66665 16.3351C1.66665 15.8734 2.60581 14.9651 5.1924 14.3509C5.64071 14.2451 5.91739 13.7959 5.81071 13.3485C5.70489 12.901 5.2549 12.6218 4.80823 12.7301C1.70747 13.4651 0 14.7451 0 16.3351C0 19.07 5.03159 20.5017 9.99981 20.5017C14.9689 20.5017 19.9996 19.07 19.9996 16.3351C19.9996 14.7451 18.2922 13.4651 15.1905 12.7301Z" fill="#D7D7D7"></path>
+                                                <path d="M10.0013 7.16905C10.4613 7.16905 10.8346 6.79574 10.8346 6.33575C10.8346 5.87575 10.4613 5.50244 10.0013 5.50244C9.54128 5.50244 9.16797 5.87575 9.16797 6.33575C9.16797 6.79574 9.54128 7.16905 10.0013 7.16905Z" fill="#D7D7D7"></path>
+                                                <path d="M8.91603 16.0292L9.25521 16.7075C9.39688 16.99 9.6852 17.1683 10.001 17.1683C10.3168 17.1683 10.6052 16.99 10.7468 16.7075L11.4651 15.2709C12.3393 13.5217 13.4176 11.8276 14.4601 10.1893L14.9351 9.44179C15.5234 8.5118 15.8342 7.43764 15.8342 6.33517C15.8342 4.6752 15.1234 3.08855 13.8843 1.98193C12.646 0.876128 10.9802 0.346177 9.31939 0.541173C6.72608 0.836167 4.58448 2.92445 4.2253 5.50608C4.01281 7.03605 4.3953 8.5552 5.3011 9.78518C6.71444 11.7001 7.81773 13.8309 8.91603 16.0292ZM10.001 3.83525C11.3793 3.83525 12.501 4.95691 12.501 6.3352C12.501 7.7135 11.3793 8.83516 10.001 8.83516C8.62272 8.83516 7.50106 7.7135 7.50106 6.3352C7.50106 4.95691 8.62272 3.83525 10.001 3.83525Z" fill="#D7D7D7"></path>
+                                            </svg>
+                                            123, Western Road, MelbourneNew York City, USA
+                                        </a></li>
+                                    <li class="mt-30"><a href="blog-single.html" class="">View Google Map</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-5">
+                            <div class="footer-single-col">
+                                <h3 class="text-white">Newsletter</h3>
+                                <p class="text-white flh-24">Sign up for our latest news &amp; articles. We won’t
+                                    give you spam mails.</p>
+                                <form class="ca-two-newsletter-form mt-40 position-relative">
+                                    <input type="text" class="form-control" placeholder="Enter your email" name="email" required="" autocomplete="off">
+                                    <button class="btn"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rm-footer-bottom text-center ptb-20">
+                <p class="risk-color fs-16 ff-risk-pri flh-24 mb-0">Copyright @2023 All Rights Reserved by
+                    <a class="risk-gd-text fw-700" href="">ThemeTags</a>
+                </p>
+            </div>
+        </div>
+        <!-- Footer -->
+
+    </div>
+
+    <!--build:js-->
+    <script src="{% static 'assets/js/vendors/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/parallax.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/aos.js' %}"></script>
+    <script src="{% static 'assets/js/vendors/massonry.min.js' %}"></script>
+    <script src="{% static 'assets/js/app.js' %}"></script>
+    <!--endbuild-->
+</body>
+
+</html>

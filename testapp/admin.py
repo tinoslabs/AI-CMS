@@ -3,14 +3,14 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('id', 'email', 'username', 'role', 'phone_number', 'qr_verified', 'qr_delivered', 'fingerprint_verified','is_active')  # Display role and phone_number
+    list_display = ('id', 'email', 'username', 'role', 'phone_number', 'designation','qr_verified', 'qr_delivered', 'fingerprint_verified','is_active')  # Display role and phone_number
     list_filter = ('role', 'is_active', 'qr_verified', 'qr_delivered', 'fingerprint_verified')  # Add filters for easy management
     search_fields = ('email', 'username', 'phone_number')  # Allow searching by email, username, or phone number
     ordering = ('email',)
     
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal Info', {'fields': ('phone_number', 'user_image')}),
+        ('Personal Info', {'fields': ('phone_number', 'user_image', 'designation')}),
         ('Verification Info', {'fields': ('qr_code', 'qr_code_data', 'qr_delivered', 'qr_verified', 'verified_by' , 'verified_at','fingerprint_template_hash','fingerprint_verified')}),
         ('Role Information', {'fields': ('role',)}),  # Ensure role is editable
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
