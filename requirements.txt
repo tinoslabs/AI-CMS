@@ -20,3 +20,5 @@ rest-framework-simplejwt==0.0.2
 sqlparse==0.5.3
 tzdata==2025.1
 whitenoise==6.7.0
+tf_keras==2.18.0
+deepface==0.0.93
