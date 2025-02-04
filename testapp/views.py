@@ -5,13 +5,15 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle
 from .models import User
-from .serializers import UserRegistrationSerializer, LoginSerializer
+from .serializers import UserRegistrationSerializer, LoginSerializer, UserSerializer
 from .utils import generate_secure_qr_code, send_email_with_qr, compare_fingerprints
 from django.core.files.base import ContentFile
 from django.contrib.auth import authenticate
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from hashlib import sha256
+from django.utils import timezone
+
 
 
 logger = logging.getLogger(__name__)
@@ -156,7 +158,7 @@ def verify_fingerprint(request):
 
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def verify_qr_code(request):
     print("Received QR code verification request")
     qr_data = request.data.get('qr_code_data')
@@ -175,17 +177,29 @@ def verify_qr_code(request):
             return Response({"error": "This QR code has already been verified."}, status=status.HTTP_400_BAD_REQUEST)
 
         user.qr_verified = True
+        user.verified_by = request.user
+        user.verified_at = timezone.now()
         user.save()
         print("QR code verified and user updated")
 
+        # return Response({
+        #     "message": "QR code verified successfully.",
+        #     "user": {
+        #         "username": user.username,
+        #         "email": user.email,
+        #         "qr_code_verified": user.qr_verified,
+        #         "user_image_url": request.build_absolute_uri(user.user_image.url) if user.user_image else None,
+        #         "verified_by": user.verified_by,
+        #         "verified_at": user.verified_at
+        #     }
+        # }, status=status.HTTP_200_OK)
+        
+        user_serializer = UserSerializer(user)
+
+        # Return the serialized user data as a response
         return Response({
             "message": "QR code verified successfully.",
-            "user": {
-                "username": user.username,
-                "email": user.email,
-                "qr_code_verified": user.qr_verified,
-                "user_image_url": request.build_absolute_uri(user.user_image.url) if user.user_image else None
-            }
+            "user": user_serializer.data
         }, status=status.HTTP_200_OK)
 
     except User.DoesNotExist:

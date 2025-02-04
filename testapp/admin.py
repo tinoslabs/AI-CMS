@@ -11,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'username', 'password')}),
         ('Personal Info', {'fields': ('phone_number', 'user_image')}),
-        ('Verification Info', {'fields': ('qr_code', 'qr_code_data', 'qr_delivered', 'qr_verified', 'fingerprint_template_hash','fingerprint_verified')}),
+        ('Verification Info', {'fields': ('qr_code', 'qr_code_data', 'qr_delivered', 'qr_verified', 'verified_by' , 'verified_at','fingerprint_template_hash','fingerprint_verified')}),
         ('Role Information', {'fields': ('role',)}),  # Ensure role is editable
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),

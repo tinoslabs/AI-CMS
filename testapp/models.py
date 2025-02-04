@@ -1,66 +1,3 @@
-# from django.contrib.auth.models import AbstractUser
-# from django.db import models
-# import os
-# from hashlib import sha256
-
-
-# def user_image_upload_path(instance, filename):
-#     """Generate a file path for new user image uploads."""
-#     ext = filename.split('.')[-1]  # Get the file extension
-#     filename = f"{instance.id}_{instance.username}.{ext}"  # Format: "id_username.jpg"
-#     return os.path.join("student_images", filename)  # Save inside "student_images/"
-
-
-# from django.contrib.auth.models import AbstractUser
-# from django.db import models
-
-# class User(AbstractUser):
-#     ROLE_CHOICES = (
-#         ('participant', 'Participant'),
-#         ('volunteer', 'Volunteer'),
-#     )
-
-#     username = models.CharField(max_length=150, unique=False)  # Remove uniqueness
-#     email = models.EmailField(unique=True)
-#     phone_number = models.CharField(max_length=15, unique=True, blank=True, null=True)
-#     user_image = models.ImageField(upload_to=user_image_upload_path, default='default/default_profile.jpg', blank=True, null=True)
-    
-#     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='participant')
-    
-#     qr_code = models.ImageField(upload_to="qr_codes/%Y/%m/", blank=True, null=True)
-#     qr_code_data = models.CharField(max_length=255, unique=True, null=True, blank=True)
-#     qr_delivered = models.BooleanField(default=False)
-#     qr_verified = models.BooleanField(default=False)
-
-#     fingerprint_template = models.BinaryField(null=True, blank=True)  # Store raw fingerprint template
-#     fingerprint_template_hash = models.CharField(max_length=64, blank=True, null=True)  # Store hashed version
-#     fingerprint_verified = models.BooleanField(default=False)
-
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     USERNAME_FIELD = 'email'
-#     REQUIRED_FIELDS = ['username']
-
-#     def __str__(self):
-#         return f"{self.username} ({self.role})"
-
-#     def save(self, *args, **kwargs):
-#         """
-#         Automatically hashes the fingerprint before saving it in the database.
-#         Ensures that we store only the hashed version for fast comparisons.
-#         """
-#         if self.fingerprint_template:
-#             self.fingerprint_template_hash = sha256(self.fingerprint_template).hexdigest()
-#         super().save(*args, **kwargs)
-
-#     class Meta:
-#         indexes = [
-#             models.Index(fields=['fingerprint_template_hash']),  # Indexing for fast lookups
-#         ]
-
-    
-
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 import os
@@ -71,7 +8,7 @@ from django.dispatch import receiver
 def user_image_upload_path(instance, filename):
     """Temporary path before instance is saved."""
     ext = filename.split('.')[-1]  # Extract file extension
-    return os.path.join("student_images", f"temp_{filename}")  # Temporary filename
+    return os.path.join("user_images", f"temp_{filename}")  # Temporary filename
 
 class User(AbstractUser):
     ROLE_CHOICES = (
@@ -98,11 +35,38 @@ class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    # verified by
+    verified_by = models.ForeignKey(
+        'self', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True, 
+        related_name='verified_participants',
+        limit_choices_to={'role': 'volunteer'}  # Ensure only volunteers can verify
+    )
+    verified_at = models.DateTimeField(null=True, blank=True)  # Timestamp of verification
+
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return f"{self.username} ({self.role})"
+    
+    
+    def verify_participant(self, volunteer):
+        """
+        Method to record QR code verification by a volunteer
+        """
+        from django.utils import timezone
+        
+        if volunteer.role != 'volunteer':
+            raise ValueError("Only volunteers can verify participants")
+        
+        self.verified_by = volunteer
+        self.verified_at = timezone.now()
+        self.qr_verified = True
+        self.save()
 
     def save(self, *args, **kwargs):
         """Hash fingerprint template before saving."""

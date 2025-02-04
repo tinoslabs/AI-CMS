@@ -63,6 +63,22 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return User.objects.create(**validated_data)
 
 
+class UserSerializer(serializers.ModelSerializer):
+    user_image_url = serializers.SerializerMethodField()
+    verified_by = serializers.CharField(source='verified_by.username', required=False, allow_null=True)
+    verified_at = serializers.DateTimeField(required=False, allow_null=True, format="%Y-%m-%d %H:%M:%S")
+
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'phone_number', 'qr_verified', 'user_image_url', 'verified_by', 'verified_at']
+    
+    def get_user_image_url(self, obj):
+        if obj.user_image:
+            return obj.user_image.url
+        return None
+
+
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
