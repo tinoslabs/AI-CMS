@@ -88,7 +88,7 @@ CORS_ORIGIN_ALLOW_ALL = True  # Allow all origins (for development only)
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',  # Your Django backend
     'http://localhost:60494',  # Your Flutter web app
-    'https://resilient-treacle-e014ea.netlify.app/',
+    'https://resilient-treacle-e014ea.netlify.app',
 ]
 
 ROOT_URLCONF = 'SampleQR.urls'

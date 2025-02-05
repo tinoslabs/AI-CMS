@@ -4,14 +4,10 @@ from .import views
 urlpatterns = [
     path('', views.index, name='index'),
 
-
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    
-    # reg students
-    path('register/', views.register_user, name='register_user'), 
-    path('verify_qr_code/', views.verify_qr_code, name='verify_qr_code'),
-    path('verify_fingerprint/', views.verify_fingerprint, name='verify_fingerprint'),
-    # path('verify_face/', views.verify_face, name='verify_face' )
+
+    path('register/', views.register_participant, name='register'),
+    path('verify_qr_code/', views.verify_participant, name='verify_qr_code'),
 
 ]

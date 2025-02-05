@@ -1,93 +1,57 @@
+# serializers.py
 from rest_framework import serializers
-from .models import User
+from .models import User, Participant
 
-# class UserRegistrationSerializer(serializers.ModelSerializer):
-#     # user_image = serializers.ImageField(required=True)  # Make the image field required
-#     phone_number = serializers.CharField(required=True, max_length=15)  # Ensure phone number is required
+class UserLoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
 
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'phone_number', 'user_image']  # Keep phone_number and user_image in the list
-
-#     def validate_email(self, value):
-#         """Ensure email is unique"""
-#         if User.objects.filter(email=value).exists():
-#             raise serializers.ValidationError("Email already registered.")
-#         return value
-
-#     def validate_phone_number(self, value):
-#         """Ensure phone number is unique and exactly 10 digits"""
-#         if len(value) != 10:
-#             raise serializers.ValidationError("Phone number must be exactly 10 digits.")
-#         if User.objects.filter(phone_number=value).exists():
-#             raise serializers.ValidationError("Phone number already registered.")
-#         return value
-
-#     def create(self, validated_data):
-#         """Create user instance with uploaded image"""
-#         return User.objects.create(**validated_data)
-    
-
-class UserRegistrationSerializer(serializers.ModelSerializer):
-    phone_number = serializers.CharField(required=True, max_length=15)
-    # fingerprint_data = serializers.CharField(required=False, allow_null=True)
-    user_image = serializers.ImageField(required=True)  # Ensure image is mandatory
-    designation = serializers.CharField(required=True, max_length=15)
-
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'phone_number', 'user_image', 'designation']
+        fields = ['id', 'username', 'email', 'role']
+
+class ParticipantRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Participant
+        fields = ['username', 'email', 'phone_number', 'designation', 'user_image']
+        
+    def validate_phone_number(self, value):
+        if len(value) != 10:
+            raise serializers.ValidationError("Phone number must be exactly 10 digits.")
+        if Participant.objects.filter(phone_number=value).exists():
+            raise serializers.ValidationError("Phone number already registered.")
+        return value
 
     def validate_email(self, value):
-        """Ensure email is unique"""
-        if User.objects.filter(email=value).exists():
+        if Participant.objects.filter(email=value).exists():
             raise serializers.ValidationError("Email already registered.")
         return value
 
-    def validate_phone_number(self, value):
-        """Ensure phone number is unique and exactly 10 digits"""
-        if len(value) != 10:
-            raise serializers.ValidationError("Phone number must be exactly 10 digits.")
-        if User.objects.filter(phone_number=value).exists():
-            raise serializers.ValidationError("Phone number already registered.")
-        return value
-    
-    def validate_user_image(self, value):
-        """Ensure user_image is provided"""
-        if not value:
-            raise serializers.ValidationError("User image is required.")
-        return value
-    
-    def validate_designation(self, value):
-        """Ensure user_image is provided"""
-        if not value:
-            raise serializers.ValidationError("Designation is required.")
-        return value
-
-    def create(self, validated_data):
-        """Create user instance with uploaded image"""
-        return User.objects.create(**validated_data)
-
-
-class UserSerializer(serializers.ModelSerializer):
+class ParticipantSerializer(serializers.ModelSerializer):
     user_image_url = serializers.SerializerMethodField()
-    verified_by = serializers.CharField(source='verified_by.username', required=False, allow_null=True)
-    verified_at = serializers.DateTimeField(required=False, allow_null=True, format="%Y-%m-%d %H:%M:%S")
-
+    verified_by = serializers.SerializerMethodField()
+    registered_by = serializers.SerializerMethodField()
 
     class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'phone_number', 'qr_verified', 'user_image_url', 'verified_by', 'verified_at']
-    
+        model = Participant
+        fields = [
+            'id', 'username', 'email', 'phone_number', 'designation',
+            'user_image_url', 'qr_verified', 'verified_by', 'verified_at',
+            'registered_by', 'created_at'
+        ]
+
     def get_user_image_url(self, obj):
         if obj.user_image:
             return obj.user_image.url
         return None
 
+    def get_verified_by(self, obj):
+        if obj.verified_by:
+            return obj.verified_by.username
+        return None
 
-
-class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True, min_length=4)
-
-    
+    def get_registered_by(self, obj):
+        if obj.registered_by:
+            return obj.registered_by.username
+        return None
