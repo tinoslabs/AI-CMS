@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /project
 
 RUN apt-get update -y && \
-    apt-get install -y tini gcc default-libmysqlclient-dev pkg-config
+    apt-get install -y tini gcc libgl1 libglib2.0-0
 
 COPY requirements.txt .
 
