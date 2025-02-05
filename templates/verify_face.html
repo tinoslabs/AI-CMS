@@ -64,7 +64,7 @@
         <video id="video" style="height: 100vh;" autoplay muted></video>
     </div>
     <script>
-        const API_URL = "/api/verify_face"
+        const API_URL = "/api/verify_face/"
         const video = document.getElementById('video')
         let isVerifying = false
         var staticUrl = "{% static 'assets' %}";
@@ -100,7 +100,7 @@
                     method: "POST",
                     body: formData,
                     headers:{
-                        "x-csrftoken": {{csrf_token}}
+                        "x-csrftoken": "{{csrf_token}}"
                     },
                     credentials: "include"
                 });

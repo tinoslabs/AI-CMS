@@ -16,6 +16,13 @@ from .utils import generate_secure_qr_code, send_email_with_qr
 import logging
 from django.shortcuts import render
 from django.core.files.base import ContentFile
+from deepface import DeepFace
+import cv2
+import numpy as numpy
+from django.conf import settings
+import os
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -143,42 +150,46 @@ def verify_participant(request):
 
 
 # @permission_classes([IsAuthenticated])
+@api_view(["POST"])
 def verify_face_api(request):
- 
-    image = request.data.get('image')
     
-    face_image = cv2.imdecode(numpy.frombuffer(image.read() , numpy.uint8), cv2.IMREAD_UNCHANGED)
-    
-    dfs = DeepFace.find(
-    img_path=face_image,
-    db_path= os.path.join(BASE_DIR, 'media/user_images')
-,
-    enforce_detection=False
-    )
-    face_data = []
-    for df in dfs:
-    
-        for index, instance in df.iterrows():
-            f = open("detected.jpg","wb")
-            image.seek(0)
-            f.write(image.read())
-            source_path = instance["identity"]
-            print(f"instance++++++++++++++{instance}")
-            print(f"source_path+++++++++++++++++++++++++++++++++{source_path}")
-            # extract facial area of the source image
-            x = instance["target_x"]
-            y = instance["target_y"]
-            w = instance["target_w"]
-            h = instance["target_h"]
-            # Get the base filename
-            file_name = os.path.basename(source_path)  # Aaron_Diaz.jpg
+    if request.method == "POST":
+        image = request.FILES.get('image')
+        
+        face_image = cv2.imdecode(numpy.frombuffer(image.read() , numpy.uint8), cv2.IMREAD_UNCHANGED)
+        
+        dfs = DeepFace.find(
+        img_path=face_image,
+        db_path = os.path.join(settings.BASE_DIR, 'media', 'participant_images'),
+        enforce_detection=False
+        )
+        face_data = []
+        for df in dfs:
+        
+            for index, instance in df.iterrows():
+                f = open("detected.jpg","wb")
+                image.seek(0)
+                f.write(image.read())
+                source_path = instance["identity"]
+                print(f"instance++++++++++++++{instance}")
+                print(f"source_path+++++++++++++++++++++++++++++++++{source_path}")
+                # extract facial area of the source image
+                x = instance["target_x"]
+                y = instance["target_y"]
+                w = instance["target_w"]
+                h = instance["target_h"]
+                # Get the base filename
+                file_name = os.path.basename(source_path)  # Aaron_Diaz.jpg
 
-            # Remove the extension
-            name_without_extension, _ = os.path.splitext(file_name)  # Aaron_Diaz
-            face_data.append({"x":x, "y":y, "width": w, "height":h, "name":name_without_extension})
+                # Remove the extension
+                name_without_extension, _ = os.path.splitext(file_name)  # Aaron_Diaz
+                face_data.append({"x":x, "y":y, "width": w, "height":h, "name":name_without_extension})
 
-    return Response(face_data)
-    # return render(request,'verify_face.html')
+        return Response(face_data)
+        # return render(request,'verify_face.html')
+    print("not post")
+    return render(request,'verify_face.html')
+    
 
 def verify_face(request):
     return render(request,'verify_face.html')

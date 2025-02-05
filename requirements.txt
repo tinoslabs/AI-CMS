@@ -22,3 +22,5 @@ tzdata==2025.1
 whitenoise==6.7.0
 tf_keras==2.18.0
 deepface==0.0.93
+opencv-python==4.11.0.86
+numpy==2.0.2
