@@ -50,12 +50,6 @@ services:
       - development
       - production
   
-  redis:
-    image: redis:7
-    profiles:
-      - development
-      - production
-  
   nginx:
     build:
       context: ./nginx
