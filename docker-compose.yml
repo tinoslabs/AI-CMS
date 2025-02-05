@@ -84,6 +84,7 @@ services:
     volumes:
       - static_volume:/project/staticfiles
       - media_volume:/project/mediafiles
+      - frontend:/project/web
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     profiles:
