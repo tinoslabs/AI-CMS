@@ -80,7 +80,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True  # Allow all origins (for development only)
@@ -172,35 +171,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'testapp.User'
 
-
-
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'  # Use your email provider's SMTP server
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'events.tinos@gmail.com'  # Replace with your email address
-# EMAIL_HOST_PASSWORD = ' fmlq loai sopk yqfz '  # Replace with your email's app password or credentials
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-
-# EVENT_ID = "unique-event-identifier"  # Change for each event
-# EVENT_NAME = "Your Event Name"
-# EVENT_DATE = "Event Date"
-# EVENT_SUPPORT_EMAIL = "events.tinos@gmail.com"
-
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.zeptomail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "emailapikey"  # Replace with your actual ZeptoMail API key
-EMAIL_HOST_PASSWORD = "wSsVR60jrxTyDqh4yWapce4wn11cA1r+Ehx73lL06yT+TKyUpsdvxBbNDVLyGvkYRzJrF2MVoLh8yRpW0DoNidt+w19WASiF9mqRe1U4J3x17qnvhDzMV2lZkBeLLYkAxQhim2BlEs0m+g=="  # Use the actual password
-DEFAULT_FROM_EMAIL = "noreply@tinos.co.in"
-
 EVENT_SUPPORT_EMAI = "noreply@tinos.co.in"
 
 # Event Details (Used in email templates)
 EVENT_ID = "unique-event-identifier"
 EVENT_NAME = "Your Event Name"
 EVENT_DATE = "March 10, 2025"
-
