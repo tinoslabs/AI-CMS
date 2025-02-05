@@ -95,7 +95,7 @@ services:
     volumes: 
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --force-renewal --no-eff-email --email ${EMAIL_HOST_USER} -d ${DOMAIN} -d www.${DOMAIN} -d auth.${DOMAIN} --agree-tos
+    command: certonly --webroot --webroot-path=/var/www/html --force-renewal --no-eff-email --email tinoslabs@gmail.com -d ${DOMAIN} -d www.${DOMAIN} -d auth.${DOMAIN} --agree-tos
     profiles: 
       - ssl-init
 
