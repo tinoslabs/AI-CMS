@@ -177,3 +177,5 @@ EVENT_SUPPORT_EMAI = "noreply@tinos.co.in"
 EVENT_ID = "unique-event-identifier"
 EVENT_NAME = "Your Event Name"
 EVENT_DATE = "March 10, 2025"
+
+DEFAULT_FROM_EMAIL="events@tinos.co.in"
