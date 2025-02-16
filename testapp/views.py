@@ -318,7 +318,3 @@ def download_all_images(request):
     response["Content-Disposition"] = 'attachment; filename="participant_images.zip"'
 
     return response
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
