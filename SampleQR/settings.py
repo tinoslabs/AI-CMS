@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'adminapp',
 
 ]
 
@@ -80,6 +81,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'SampleQR.middleware.InvalidUrlMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True  # Allow all origins (for development only)
@@ -177,3 +179,7 @@ EVENT_SUPPORT_EMAI = "noreply@tinos.co.in"
 EVENT_ID = "unique-event-identifier"
 EVENT_NAME = "Your Event Name"
 EVENT_DATE = "March 10, 2025"
+
+
+DEFAULT_FROM_EMAIL="events@tinos.co.in"
+

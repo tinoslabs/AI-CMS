@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate
 from django.utils import timezone
 from django.db import transaction
 from .models import User, Participant
+from adminapp.models import Testimonial
 from .serializers import (
     UserLoginSerializer, UserSerializer,
     ParticipantRegistrationSerializer, ParticipantSerializer
@@ -27,7 +28,8 @@ from django.http import JsonResponse
 logger = logging.getLogger(__name__)
 
 def index(request):
-    return render(request, 'index.html')
+    testimonials = Testimonial.objects.all()
+    return render(request, 'index.html', {'testimonials':testimonials})
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -187,3 +189,127 @@ def verify_face_api(request):
 
 def verify_face(request):
     return render(request,'verify_face.html')
+
+import os
+import zipfile
+from io import BytesIO
+from datetime import datetime
+import pandas as pd
+from openpyxl import Workbook
+from openpyxl.drawing.image import Image as ExcelImage
+
+from django.conf import settings
+from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+
+from .models import Participant
+
+
+
+@api_view(["GET"])
+# @permission_classes([IsAuthenticated])  # Require JWT Token
+def export_participants_to_excel(request):
+    """REST API to export participants' details to an Excel file including images."""
+    fields = [
+        "username", "email", "phone_number", "designation", "user_image",
+        "qr_code", "qr_code_data", "qr_delivered", "qr_verified",
+        "registered_by", "verified_by", "verified_at", "created_at", "updated_at"
+    ]
+
+    participants = Participant.objects.all().values(*fields)
+
+    # Create Excel workbook and sheet
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Participants"
+
+    # Define headers
+    headers = ["Username", "Email", "Phone Number", "Designation", "User Image",
+               "QR Code", "QR Code Data", "QR Delivered", "QR Verified",
+               "Registered By", "Verified By", "Verified At", "Created At", "Updated At"]
+    
+    ws.append(headers)
+
+    # Set column widths & row heights (for images)
+    column_widths = [20, 30, 15, 20, 15, 15, 20, 10, 10, 20, 20, 20, 20, 20]
+    for i, width in enumerate(column_widths, start=1):
+        ws.column_dimensions[ws.cell(row=1, column=i).column_letter].width = width
+
+    img_height = 50  # Set row height to fit images
+    for row_idx in range(2, len(participants) + 2):
+        ws.row_dimensions[row_idx].height = img_height
+
+    media_root = settings.MEDIA_ROOT  # Get media root path
+
+    for idx, participant in enumerate(participants, start=2):  # Start from row 2
+        row_data = [
+            participant["username"],
+            participant["email"],
+            participant["phone_number"],
+            participant["designation"],
+            "",  # Placeholder for user image
+            "",  # Placeholder for QR code
+            participant["qr_code_data"],
+            participant["qr_delivered"],
+            participant["qr_verified"],
+            participant["registered_by"] or "N/A",
+            participant["verified_by"] or "N/A",
+            participant["verified_at"].replace(tzinfo=None) if participant["verified_at"] else "",
+            participant["created_at"].replace(tzinfo=None) if participant["created_at"] else "",
+            participant["updated_at"].replace(tzinfo=None) if participant["updated_at"] else "",
+        ]
+
+        # Add row data
+        ws.append(row_data)
+
+        # Insert user image
+        user_image_path = participant["user_image"]
+        if user_image_path:
+            full_path = os.path.join(media_root, user_image_path)
+            if os.path.exists(full_path):
+                img = ExcelImage(full_path)
+                img.width, img.height = 50, 50
+                img.anchor = f"E{idx}"  # Insert into column E
+                ws.add_image(img)
+
+    response = HttpResponse(
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+    response["Content-Disposition"] = 'attachment; filename="participants_with_images.xlsx"'
+
+    with BytesIO() as output:
+        wb.save(output)
+        output.seek(0)
+        response.write(output.getvalue())
+
+    return response
+
+
+@api_view(["GET"])
+# @permission_classes([IsAuthenticated])  # Require JWT Token
+def download_all_images(request):
+    """REST API to create and download a ZIP file containing all participant images."""
+    
+    zip_buffer = BytesIO()
+    zip_file = zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED)
+    media_root = settings.MEDIA_ROOT  # Base directory for media files
+
+    participants = Participant.objects.all()
+
+    for participant in participants:
+        if participant.user_image:
+            user_image_path = os.path.join(media_root, participant.user_image.name)
+            if os.path.exists(user_image_path):
+                zip_file.write(user_image_path, f"user_images/{os.path.basename(user_image_path)}")
+
+    zip_file.close()
+
+    zip_buffer.seek(0)
+    response = HttpResponse(zip_buffer.getvalue(), content_type="application/zip")
+    response["Content-Disposition"] = 'attachment; filename="participant_images.zip"'
+
+    return response

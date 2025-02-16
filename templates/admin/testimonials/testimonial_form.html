@@ -1,0 +1,64 @@
+{% extends "admin/admin_base.html" %}
+{% load static %}
+
+{% block title %}
+    Submit Testimonial
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card shadow-sm p-4">
+        <h1 class="text-center text-primary fw-bold">
+            {% if form.instance.pk %}Edit{% else %}Add{% endif %} Testimonial
+        </h1>
+        <form id="testimonialForm" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.name }}
+            <div class="mb-3">
+                <label class="form-label">Message</label>
+                <textarea 
+                    id="messageInput" 
+                    name="message" 
+                    class="form-control" 
+                    rows="3" 
+                    placeholder="Write your review here..." 
+                    maxlength="133">{{ form.instance.message }}</textarea>
+                <small id="charCount" class="text-muted">{{ form.instance.message|length|default:"0" }} / 133</small>
+            </div>
+            
+            {{ form.user_image }}
+            
+            <div class="mb-3">
+                <label class="form-label d-block">Rating</label>
+                <div id="ratingStars">
+                    <span class="star" data-value="1">★</span>
+                    <span class="star" data-value="2">★</span>
+                    <span class="star" data-value="3">★</span>
+                    <span class="star" data-value="4">★</span>
+                    <span class="star" data-value="5">★</span>
+                </div>
+                <input type="hidden" name="rating" id="ratingInput" value="{{ form.instance.rating|default:0 }}">
+            </div>
+        
+            <button type="submit" class="btn btn-primary w-100">Save Testimonial</button>
+        </form>
+        
+        <style>
+            .star {
+                font-size: 30px;
+                color: #ccc;
+                cursor: pointer;
+                transition: color 0.3s;
+            }
+            .star:hover, .star.active {
+                color: gold;
+            }
+        </style>
+    </div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'admin/assets/js/rating.js' %}"></script>
+{% endblock %}

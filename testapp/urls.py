@@ -11,6 +11,12 @@ urlpatterns = [
     path('api/verify_qr_code/', views.verify_participant, name='verify_qr_code'),
 
     path('api/verify_face/', views.verify_face_api, name='verify_face_api'),
-    path('verify_face/', views.verify_face, name='verify_face')
+    path('verify_face/', views.verify_face, name='verify_face'),
+    
+    path('export/', views.export_participants_to_excel, name='export'),
+    path('download/', views.download_all_images, name='download'),
+
 
 ]
+
+

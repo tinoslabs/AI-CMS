@@ -1,0 +1,16 @@
+.risk-testimonial-item {
+    
+    min-height: 160px; /* Ensures all cards have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distributes content evenly */
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .risk-testimonial-item {
+        
+        /* min-height: auto; Allows flexibility on smaller screens */
+        margin: auto;
+    }
+}

@@ -72,7 +72,7 @@
                     <div class="collapse navbar-collapse justify-content-center">
                         <ul class="nav col-12 col-md-auto justify-content-center main-menu">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" href="{% url 'index' %}">Home</a>
                                 <div class="dropdown-menu border-0 rounded-custom shadow py-0 bg-white homepage-list-wrapper">
                                     
                             </li>
@@ -107,7 +107,7 @@
                 <div class="offcanvas-body">
                     <ul class="nav col-12 col-md-auto justify-content-center main-menu">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link" href="{% url 'index' %}">
                                 Home
                             </a>
                             
@@ -190,10 +190,10 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-6 col-lg-8">
                         <div class="text-center">
-                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
-                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-30">AICEMS Solutions to <span
-    								class="risk-gd-text">Bridge Your</span>
-                                <span class="risk-highlight-color">Risk </span>Journey Across
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">How Can Aegis Crowd Help You?</h6>
+                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-30">Solutions to Bridge Your<span
+    								class="risk-gd-text"> Risk Journey</span>with
+                                <span class="risk-highlight-color">Aegis</span> Crowd
                             </h2>
                         </div>
                     </div>
@@ -202,52 +202,54 @@
                     <div class="col-xxl-3 col-md-6">
                         <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
                             <img src="{% static 'assets/img/risk_managment/info_card.svg' %}" alt="">
-                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Enterprise <br>
-                                <span class="risk-bg-color"></span>Risk Management
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">AI-Powered <br>
+                                <span class="risk-bg-color"></span>Smart & Secure Access Control
                             </h5>
-                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
-                                passages of
-                                available but the alteration
-                                by injected.</p>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">
+                                Ensure secure and efficient entry management with QR-based ticket scanning and
+                                facial recognition verification. This eliminates ticket fraud and unauthorized access,
+                                ensuring only genuine attendees enter the event.
+                            </p>
                             <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
                         </div>
                     </div>
                     <div class="col-xxl-3 col-md-6">
                         <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
                             <img src="{% static 'assets/img/risk_managment/info_card_2.svg' %}" alt="">
-                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Third Party <br>
-                                <span class="risk-bg-color"></span>Risk Management
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Real-Time <br>
+                                <span class="risk-bg-color"></span>Unauthorized Entry Detection
                             </h5>
-                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
-                                passages of
-                                available but the alteration
-                                by injected.</p>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">
+                                Our AI system continuously scans the crowd to identify unregistered individuals and
+                                marks them as "Unknown Persons." Security teams receive instant alerts, allowing quick
+                                action against unauthorized access and potential threats.
+                            </p>
                             <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
                         </div>
                     </div>
                     <div class="col-xxl-3 col-md-6">
                         <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
                             <img src="{% static 'assets/img/risk_managment/info_card_3.svg' %}" alt="">
-                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Financial<br>
-                                <span class="risk-bg-color"></span>Controls
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Seamless Ticketing<br>
+                                <span class="risk-bg-color"></span>& Attendee Management
                             </h5>
-                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
-                                passages of
-                                available but the alteration
-                                by injected.</p>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">
+                                Manage event ticket sales, seamless check-ins, and organized guest lists with ease. The platform integrates QR-based digital tickets, reducing wait times and ensuring fast, hassle-free entry while maintaining security.
+                            </p>
                             <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
                         </div>
                     </div>
                     <div class="col-xxl-3 col-md-6">
                         <div class="risk-info-card ca-two-border ca-two-border-color rounded-8 risk-border-hover padding-6 pt-40 mt-20">
                             <img src="{% static 'assets/img/risk_managment/info_card_4.svg' %}" alt="">
-                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Compliance<br>
-                                <span class="risk-bg-color"></span>Management
+                            <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-26 mt-30">Intelligent Crowd<br>
+                                <span class="risk-bg-color"></span>Monitoring & Analytics
                             </h5>
-                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">There are many variations of
-                                passages of
-                                available but the alteration
-                                by injected.</p>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-24 mb-30 mt-20">
+                                Gain real-time insights into crowd movement, density, and security risks. Aegis Crowd
+                                helps event organizers and security teams optimize their strategies, improving safety,
+                                resource allocation, and emergency response.
+                            </p>
                             <a href="" class="risk-color-two fs-16 ff-risk-pri fw-700">Explore More</a>
                         </div>
                     </div>
@@ -273,34 +275,40 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="pr-40">
-                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
-                            <h2 class="risk-title text-white fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-15">Simplify
-                                Compliance & Manage
-                                <span class="risk-gd-text">Risk with Quiety</span> One GRC Software
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">How Can Aegis Crowd Help You?</h6>
+                            <h2 class="risk-title text-white fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-15">Aegis Crowd – Your Smart  
+
+                                <span class="risk-gd-text">AI-Powered</span> Event Guardian
                             </h2>
-                            <p class="text-white ff-dmsans fs-16 flh-28 mb-0 mt-20">All-in-one Governance, Risk, and
-                                Compliance
-                                (GRC) software. Our comprehensive solution empowers your organization to efficiently
-                                Navigate
-                                the complex landscape.</p>
+                            <p class="text-white ff-dmsans fs-16 flh-28 mb-0 mt-20">
+                                Managing large crowds and ensuring event security can be challenging. Aegis Crowd,
+                                powered by Tinos Software and Security Solutions LLP, offers an AI-driven solution for
+                                seamless ticketing, secure entry, and real-time threat detection.
+                            </p>
                             <ul class="risk-service-list list-unstyled mb-0 mt-40">
                                 <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
                                     <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
                                         1
                                     </div>
-                                    Stay Compliant with Global Regulations
+                                    Smart & Secure Entry Management
                                 </li>
                                 <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
                                     <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
                                         2
                                     </div>
-                                    Oversee of all your GRC initiatives
+                                    Prevent Unauthorized Access
                                 </li>
                                 <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
                                     <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
                                         3
                                     </div>
-                                    Oversee of all your GRC initiatives
+                                    Streamlined Ticketing & Check-In
+                                </li>
+                                <li class="d-flex align-items-center flex-wrap gap-3 text-white fs-16 fw-700 ff-dmsans flh-28 mb-20">
+                                    <div class="risk-service-count d-flex align-items-center justify-content-center fs-12 rounded-circle">
+                                        4
+                                    </div>
+                                    Real-Time Crowd Monitoring & Insights
                                 </li>
                             </ul>
                             <a href="#contact" class="btn risk-btn-bg risk-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-30">
@@ -366,20 +374,16 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="position-relative">
-                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
-                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20">Connect Across Business
-                                Areas to
-                                <span class="risk-gd-text">Prioritize Risk</span>
+                            <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">How Can Aegis Crowd Help You?
+                            </h6>
+                            <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20">Connect Across Business Areas to Prioritize Risk with
+                                <span class="risk-gd-text">Aegis Crowd
+                                </span>
                             </h2>
-                            <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Our software was purpose
-                                built to
-                                be
-                                interconnected across enterprise governance areas and our clients’ core systems – serving as
-                                a
-                                single source of truth for your Organizations. Identify high-risk zones for management, and
-                                finance. LogicManager facilitates inter-departmental collaboration, offering analytical
-                                insights
-                                that paint a vivid risk landscape you can allocate your resources strategically.</p>
+                            <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">In today’s fast-paced world, managing risks across multiple business areas is crucial for
+                                seamless operations and security. Aegis Crowd helps businesses and event organizers
+                                identify, analyze, and mitigate risks using AI-driven insights and real-time monitoring.
+                            </p>
                             <a href="#contact" class="btn risk-outline-btn mt-40 risk-color ff-risk-pri fs-14 fw-700">Get Start
                                 </a>
                             <img src="{% static 'assets/img/risk_managment/shape/service_content.png' %}" alt="" class="s-one position-absolute">
@@ -405,7 +409,7 @@
                         <div class="col-xl-5 col-lg-7">
                             <div class="text-center">
                                 <img src="{% static 'assets/img/risk_managment/cta.png' %}" alt="" class="risk-cta-img position-absolute z--1">
-                                <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Explore How Can I Help You</h6>
+                                <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">How Can Aegis Crowd Help You?</h6>
                                 <h2 class="risk-title text-white fs-42 ff-risk-pri flh-56 fw-800">Discover the Value of
                                     Risk Intelligence.
                                 </h2>
@@ -425,15 +429,26 @@
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-5">
-                        <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">Get In touch</h6>
-                        <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-20">We’re
-                            <span class="risk-gd-text">Committed to</span> your Success.
+                        <h6 class="risk-sub-text fs-16 ff-risk-pri fw-700 mb-20">How Can Aegis Crowd Help You?</h6>
+                        <h2 class="risk-title risk-color fs-42 ff-risk-pri flh-56 fw-800 mb-20 pr-20">We Are
+                            <span class="risk-gd-text">Committed to</span> Your Success.
                         </h2>
-                        <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Move from feeling ill-equipped and
-                            anxious about imminent catastrophe to outsmarting the bad actors and protecting your
-                            organization with confidence.</p>
+                        <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50 mb-3">
+                            At Aegis Crowd, your success is our priority. We empower businesses and event organizers
+                            with cutting-edge AI technology to ensure secure, efficient, and seamless crowd
+                            management.
+                        </p>
+                        <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50 mb-3">
+                            Our commitment goes beyond just providing a platform—we partner with you to enhance
+                            security, streamline operations, and mitigate risks, ensuring your events and business
+                            functions run smoothly and securely.
+                        </p>
+                        <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50 mb-3">
+                            With Aegis Crowd, you gain a trusted AI-powered solution that prioritizes your safety,
+                            efficiency, and success every step of the way
+                        </p>
                     </div>
-                    <div class="col-lg-7">
+                    <!-- <div class="col-lg-7">
                         <div class="pl-50">
                             <div class="risk-contact-form-bg risk-bg-color-two rounded-16 position-relative z-1 overflow-hidden">
                                 <div class="risk-form-box bgc-white rounded-12">
@@ -503,11 +518,77 @@
                                 <img src="{% static 'assets/img/risk_managment/shape/contact.png' %}" alt="" class="s-one position-absolute z--1">
                             </div>
                         </div>
+                    </div> -->
+
+                    <div class="col-lg-7">
+                        <div class="pl-50">
+                            <div class="risk-contact-form-bg risk-bg-color-two rounded-16 position-relative z-1 overflow-hidden">
+                                <div class="risk-form-box bgc-white rounded-12">
+                                    <h5 class="risk-color fs-20 ff-risk-pri fw-800 flh-24 mb-30">Get In Touch Now</h5>
+
+                                    <form id="contact-form" method="POST">
+                                        {% csrf_token %}                                        
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">First Name <span class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" name="first_name" placeholder="First Name" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Last Name <span class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" name="last_name" placeholder="Last Name" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Email <span class="risk-highlight-color">*</span></h6>
+                                                    <input type="email" name="email" placeholder="Email Address" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Organization Name <span class="risk-highlight-color">*</span></h6>
+                                                    <input type="text" name="company_name" placeholder="Organization Name" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Phone Number <span class="risk-highlight-color">*</span></h6>
+                                                    <input type="number" name="phone_number" placeholder="Phone No" class="form-control" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">How did You Hear About Us?</h6>
+                                                    <input type="text" name="referral_source" placeholder="Write Here" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="risk-form-item mb-20">
+                                                    <h6 class="risk-color fs-14 ff-risk-pri fw-600">Your Commands</h6>
+                                                    <textarea name="commands" placeholder="Write your commands here..." class="form-control" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="message-box"></div> <!-- Message Box for Dynamic Messages -->
+                                        <button type="submit" id="submit-btn" class="btn risk-btn-bg risk-outline-btn-hover clr-white ff-risk-pri fs-14 fw-600 mt-20">
+                                            Submit Details
+                                        </button>
+                                    </form>
+                                    
+                                </div>
+                                <img src="{% static 'assets/img/risk_managment/shape/contact.png' %}" alt="bg_error" class="s-one position-absolute z--1">
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
         <!-- Contact -->
+        
 
         <!-- Testimonial -->
         <div class="rm-testimonial-area ptb-60">
@@ -519,7 +600,8 @@
                                 <span class="risk-gd-text">Real Impact</span>
                             </h2>
                             <p class="risk-color-two ff-dmsans fs-16 flh-28 mb-0 fch-50">Move from feeling ill-equipped and
-                                anxious about imminent catastrophe to outsmarting the bad actors & protecting.</p>
+                                anxious about imminent catastrophe to outsmarting the bad actors & protecting.
+                            </p>
                         </div>
                         <div class="col-lg-6">
                             <div class="text-end">
@@ -530,12 +612,38 @@
                     </div>
                     <div class="risk-testimonial-items ptb-20 swiper">
                         <div class="swiper-wrapper">
+                            {% for testimonial in testimonials %}
                             <div class="swiper-slide">
+                                <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img src="{{ testimonial.user_image.url }}" alt="{{ testimonial.name }}"
+                                            style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                                        <div class="rm-testimonial-info">
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">{{ testimonial.name }}</h6>
+                                            <td class="text-center">
+                                                {% for i in "12345"|make_list %}
+                                                    {% if forloop.counter <= testimonial.rating %}
+                                                        <i class="fa fa-star text-warning" style="font-size: 12px;"></i> <!-- Filled Star -->
+                                                    {% else %}
+                                                        <i class="fa fa-star text-secondary" style="font-size: 12px;"></i> <!-- Empty Star -->
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </div>
+                                    </div>
+                                    <p class="risk-color-two fs-16 ff-dmsans flh-24 mt-20 mb-0"> 
+                                        “{{ testimonial.message }}”
+                                    </p>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- <div class="swiper-slide">
                                 <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
                                     <div class="d-flex align-items-center gap-3">
                                         <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
                                         <div class="rm-testimonial-info">
-                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander 2</h6>
                                             <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
                                         </div>
                                     </div>
@@ -549,7 +657,7 @@
                                     <div class="d-flex align-items-center gap-3">
                                         <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
                                         <div class="rm-testimonial-info">
-                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
+                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander 3</h6>
                                             <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
                                         </div>
                                     </div>
@@ -557,21 +665,7 @@
                                         progressive networks. Synergistically integrate dynamic solutions vis-a-vis
                                         resource maximizing roi”</p>
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="risk-testimonial-item bgc-white padding-6 ptb-40 rounded-8 risk-shadow mt-20">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <img src="{% static 'assets/img/risk_managment/testimonial.png' %}" alt="">
-                                        <div class="rm-testimonial-info">
-                                            <h6 class="risk-color fs-14 ff-dmsans fw-500 mb-0">Leslie Alexander</h6>
-                                            <img src="{% static 'assets/img/risk_managment/testimonial_icon.png' %}" alt="">
-                                        </div>
-                                    </div>
-                                    <p class="risk-color-two fs-16 ff-dmsans flh-24 mt-20 mb-0"> “Interactively redefine
-                                        progressive networks. Synergistically integrate dynamic solutions vis-a-vis
-                                        resource maximizing roi”</p>
-                                </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="risk-slider__controls">
                             <div class="risk-slider__pagination"></div>
@@ -684,7 +778,60 @@
     <script src="{% static 'assets/js/vendors/aos.js' %}"></script>
     <script src="{% static 'assets/js/vendors/massonry.min.js' %}"></script>
     <script src="{% static 'assets/js/app.js' %}"></script>
+    <script src="{% static 'assets/js/contact_form.js' %}"></script>
     <!--endbuild-->
 </body>
+
+
+<script>
+// document.getElementById('contact-form').addEventListener('submit', function(e) {
+//     e.preventDefault();
+    
+//     // Get the form and message box elements
+//     const form = this;
+//     const messageBox = document.getElementById('message-box');
+//     const submitBtn = document.getElementById('submit-btn');
+    
+//     // Disable submit button and show loading
+//     submitBtn.disabled = true;
+//     submitBtn.textContent = 'Sending...';
+    
+//     // Get form data
+//     const formData = new FormData(form);
+    
+//     // Send the request
+//     fetch('/submit-contact/', {
+//         method: 'POST',
+//         body: formData
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         // Show message
+//         messageBox.innerHTML = `
+//             <div class="alert ${data.status === 'success' ? 'alert-success' : 'alert-danger'}">
+//                 ${data.message}
+//             </div>
+//         `;
+        
+//         // Reset form if successful
+//         if (data.status === 'success') {
+//             form.reset();
+//         }
+//     })
+//     .catch(error => {
+//         messageBox.innerHTML = `
+//             <div class="alert alert-danger">
+//                 An error occurred. Please try again.
+//             </div>
+//         `;
+//     })
+//     .finally(() => {
+//         // Re-enable submit button
+//         submitBtn.disabled = false;
+//         submitBtn.textContent = 'Submit Details';
+//     });
+// });
+</script>
+
 
 </html>

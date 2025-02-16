@@ -1,0 +1,51 @@
+{% extends "admin/admin_base.html" %}
+{% load static %}
+
+{% block title %}
+      All Enquiry - Admin
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Responsive Table -->
+<div class="card">
+    <h5 class="card-header">Responsive Table</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table">
+            <thead>
+                <tr class="text-nowrap">
+                    <th>No.</th>
+                    <th>Name</th>
+                    <th class="text-center">Email</th>
+                    <th class="text-center">Organization Name</th>
+                    <th>Phone Number</th>
+                    <th style="min-width: 200px;">Commands</th>
+                    <!-- <th class="text-center">Submitted at</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for enquiry in enquiries %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ enquiry.first_name }} {{ enquiry.last_name }}</td>
+                    <td class="text-center">{{ enquiry.email }}</td>
+                    <td class="text-center">{{ enquiry.company_name }}</td>
+                    <td>{{ enquiry.phone_number }}</td>
+                    <td>{{ enquiry.commands }}</td>
+                    <!-- <td class="text-center">
+                        {{ enquiry.submitted_at|date:"M d, Y" }} at {{ enquiry.submitted_at|time:"H:i" }}
+                    </td> -->
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No enquiries yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--/ Responsive Table -->
+
+{% endblock %}
