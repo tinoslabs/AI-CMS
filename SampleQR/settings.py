@@ -182,4 +182,3 @@ EVENT_DATE = "March 10, 2025"
 
 
 DEFAULT_FROM_EMAIL="events@tinos.co.in"
-

@@ -33,3 +33,8 @@ venv/
 
 #Others
 certbot/
+
+
+# git push
+git rm -r --cached SampleQR/__pycache__/
+git rm -r --cached testapp/__pycache__/

@@ -22,7 +22,7 @@ import cv2
 import numpy as numpy
 from django.conf import settings
 import os
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 logger = logging.getLogger(__name__)
@@ -207,6 +207,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Participant
+import pandas as pd
+from openpyxl import Workbook
+from openpyxl.drawing.image import Image as ExcelImage
+import zipfile
+from io import BytesIO
 
 
 
@@ -313,3 +318,7 @@ def download_all_images(request):
     response["Content-Disposition"] = 'attachment; filename="participant_images.zip"'
 
     return response
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
